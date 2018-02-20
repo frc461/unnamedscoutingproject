@@ -3,40 +3,92 @@
     <head>
         <link rel="stylesheet" href="/css/global.css"></link>
         <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script>
-var value = 0;
-function myFunction() {
-}
-function test() {
-    value +=1;
-
-    document.getElementById('value').innerHTML = value;
-    return true
-}
-function test1() {
-    value -=1;
-
-    document.getElementById('value').innerHTML = value;
-    return true
-}
+$(function() {
+    $('button[data-ctr-action]').click(function() {
+        id = $(this).data('ctr-id');
+        val = parseInt($('[data-ctr-value=' + id + ']').html());
+        if($(this).data('ctr-action') == '+') {
+            val += 1;
+        }else{
+            val -= 1;
+        }
+        $('[data-ctr-value=' + id + ']').html(val);
+    });
+});
         </script>
     </head>    
     <body>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" onclick="myFunction()" class="btn btn-primary btn-lg btn-block">Cross</button>
-                            <p id="Cross"></p>
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="padding:250px">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button type="button" onclick="myFunction()" class="btn btn-primary btn-lg btn-block">Cross</button>
+                                                <p id="Cross"></p>
+                                            </div>
+                                        </div>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch'} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale'} %>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button type="button" onclick="myFunction()" class="btn btn-primary btn-lg btn-block">ssorC</button>
+                                                <p id="Cross"></p>
+                                            </div>
+                                        </div>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch'} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale'} %>
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button type="button" onclick="myFunction()" class="btn btn-primary btn-lg btn-block">ssorCross</button>
+                                                <p id="Cross"></p>
+                                            </div>
+                                        </div>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch'} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale'} %>
+
+                                    </div>    
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <%= partial :counter, locals: {label: "Scale"} %>
+                    <div class="carousel-item" style="padding:250px">
+                        <div class="row">    
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button type="button" onclick="myFunction()" class="btn btn-primary btn-lg btn-block">Cross</button>
+                                                <p id="Cross"></p>
+                                            </div>
+                                        </div>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch'} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale'} %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <p style="background-color:black">Button</p>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <p style="background-color:black">notButton</p>
+                    </a>
                 </div>
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-4">
-                </div>    
             </div>
         </div>
     </body>
