@@ -9,16 +9,34 @@
 $(function() {
     $('button[data-ctr-action]').click(function() {
         id = $(this).data('ctr-id');
-        val = parseInt($('[data-ctr-value=' + id + ']').html());
+        teamid = $(this).data('team');
+        console.log(id);
+        val = parseInt($('[data-team=' + teamid + '][data-ctr-value=' + id + ']').html());
+        console.log(val);
         if($(this).data('ctr-action') == '+') {
             val += 1;
         }else{
             val -= 1;
         }
-        id = $(this).data('team');
-        $('[data-ctr-value=' + id + ']').html(val);
+        $('[data-team=' + teamid + '][data-ctr-value=' + id + ']').html(val);
+
+    });
+    $('button[data-btn-action]').click(function() {
+        console.log($(this));
+        if($(this).hasClass('btn-success')) {
+            console.log('whoo');
+            $(this).removeClass('btn-success');
+            $(this).addClass('btn-primary');
+        } else { 
+            console.log('whee');
+            $(this).addClass('btn-success');
+            $(this).removeClass('btn-primary');
+        }
+        console.log($(this).hasClass('btn-success'));
+        console.log($(this).hasClass('btn-primary'));
     });
     $('.carousel').carousel('pause');
+
 });
 function qFunction() {
     $('.carousel').carousel('next');
@@ -26,6 +44,7 @@ function qFunction() {
 function gqFunction() {
     $('.carousel').carousel('prev');
 }
+
         </script>
     </head>    
     <body>
@@ -37,19 +56,19 @@ function gqFunction() {
                             <div class="col-sm-12">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <%= partial :button, locals: {name: "Cross"}%>
+                                        <%= partial :button, locals: {name: "Cross",teamid: "461"}%>
                                         <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
                                         <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
                                     </div>
                                     <div class="col-sm-4"> 
-                                        <%= partial :button, locals: {name: "Cross"}%>
-                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
+                                        <%= partial :button, locals: {name: "Cross",teamid: "462"}%>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "462"} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
                                     </div>
                                     <div class="col-sm-4"> 
-                                        <%= partial :button, locals: {name: "Cross"}%>
-                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
+                                        <%= partial :button, locals: {name: "Cross",teamid: "463"}%>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "463"} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
 
                                     </div>    
                                 </div>
@@ -65,6 +84,16 @@ function gqFunction() {
                                         <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
                                         <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
                                     </div>
+                                    <div class="col-sm-4">
+                                        <%= partial :button, locals: {name: "Cross",teamid: "462"}%>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "462"} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <%= partial :button, locals: {name: "Cross",teamid: "463"}%>
+                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "463"} %>
+                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -74,6 +103,7 @@ function gqFunction() {
                             <button type="button" onclick="gqFunction()" class="btn btn-info btn-block">Prev</button>
                         </div>
                         <div class="col-sm-8">
+                            <center><button type="button" data-mode-label class="btn btn-info btn-block">Auto</button></center>
                         </div>
                         <div class="col-sm-2">
                             <button type="button" onclick="qFunction()" class="btn btn-info btn-block">Next</button>
