@@ -84,31 +84,43 @@ function gqFunction() {
         $('#indicator').html('Tele');
     }
 }
-function getFunction() {
-    if ($('#1').hasClass('button-success')) {
-        $('#1').removeClass('button-success')
-        $('#1').addClass('button-danger')
-        $('#2').removeClass('button-success')
-        $('#3').removeClass('button-success')
-    } else if ($('#1').hasClass('button-danger')) {
-        $('#1').removeClass('button-danger')
-        $('#1').addClass('button-success')
-    } else if ($('#2').hasClass('button-success')) {
-        $('#2').removeClass('button-success')
-        $('#2').addClass('button-danger')
-        $('#1').removeClass('button-success')
-        $('#3').removeClass('button-success')
-    } else if ($('#2').hasClass('button-danger')) {
-        $('#2').removeClass('button-danger')
-        $('#2').addClass('button-success')
-    } else if ($('#3').hasClass('button-success')) {
-        $('#3').removeClass('button-success')
-        $('#3').addClass('button-danger')
-        $('#1').removeClass('button-success')
-        $('#2').removeClass('button-success')
-    } else if ($('#3').hasClass('button-danger')) {
-        $('#3').removeClass('button-danger')
-        $('#3').addClass('button-success')
+function getn(e) {
+    var teamid = $(e).data('teamid');
+    var tmpObj = $('button[data-teamid="' + teamid + '"].single');
+    tmpObj.removeClass('btn-success');
+    tmpObj.addClass('btn-danger');
+}
+function getm(e) {
+    var teamid = $(e).data('teamid');
+    var tmpObj = $('button[data-teamid="' + teamid + '"].double');
+    tmpObj.removeClass('btn-success');
+    tmpObj.addClass('btn-danger');
+}
+function fail(e) {
+    /*
+    if ($('#fail').hasClass('btn-dark')) {
+        $('#fail').removeClass('btn-dark');
+        $('#fail').addClass('btn-light');
+    } else if ($('#fail').hasClass('btn-light')) {
+        $('#fail').removeClass('btn-light');
+        $('#fail').addClass('btn-dark');
+    } else if ($('#fail2').hasClass('btn-dark')) {
+        $('#fail2').removeClass('btn-dark');
+        $('#fail2').addClass('btn-light');
+    } else if ($('#fail2').hasClass('btn-light')) {
+        $('#fail2').removeClass('btn-light');
+        $('#fail2').addClass('btn-dark');
+    } else if ($('#fail3').hasClass('btn-dark')) {
+        $('#fail3').removeClass('btn-dark');
+        $('#fail3').addClass('btn-light');
+    } else if ($('#fail3').hasClass('btn-light')) {
+        $('#fail3').removeClass('btn-light');
+        $('#fail3').addClass('btn-dark');
+        }*/
+    if($(e).hasClass('btn-dark')){
+        $(e).removeClass('btn-dark').addClass('btn-light');
+    }else{
+        $(e).removeClass('btn-light').addClass('btn-dark');
     }
 }
         </script>
@@ -163,6 +175,8 @@ function getFunction() {
                                         <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "461"} %>
                                         <%= partial :button, locals: {name: "Park",teamid: "461"}%>
                                         <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
+                                        <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "461"}%>
+                                        <%= partial :button1, locals: {lel: "fail", teamid: "461"}%>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "462"}%>
@@ -172,6 +186,8 @@ function getFunction() {
                                         <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "462"} %>
                                         <%= partial :button, locals: {name: "Park",teamid: "462"}%>
                                         <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "462"}%>
+                                        <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "462"}%>
+                                        <%= partial :button1, locals: {lel: "fail2", teamid: "462"}%>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "463"}%>
@@ -181,6 +197,8 @@ function getFunction() {
                                         <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "463"} %>
                                         <%= partial :button, locals: {name: "Park",teamid: "463"}%>
                                         <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "463"}%>
+                                        <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "463"}%>
+                                        <%= partial :button1, locals: {lel: "fail3", teamid: "463"}%>
                                     </div>
                                 </div>
                             </div>
