@@ -87,28 +87,28 @@ function gqFunction() {
 function getFunction() {
     if ($('#1').hasClass('button-success')) {
         $('#1').removeClass('button-success')
-        $('#1').addClass('button-danger')
-        $('#2').removeClass('button-success')
-        $('#3').removeClass('button-success')
+            $('#1').addClass('button-danger')
     } else if ($('#1').hasClass('button-danger')) {
         $('#1').removeClass('button-danger')
-        $('#1').addClass('button-success')
+            $('#1').addClass('button-success')
+            $('#2').removeClass('button-success')
+            $('#3').removeClass('button-success')
     } else if ($('#2').hasClass('button-success')) {
         $('#2').removeClass('button-success')
-        $('#2').addClass('button-danger')
-        $('#1').removeClass('button-success')
-        $('#3').removeClass('button-success')
+            $('#2').addClass('button-danger')
     } else if ($('#2').hasClass('button-danger')) {
         $('#2').removeClass('button-danger')
-        $('#2').addClass('button-success')
+            $('#2').addClass('button-success')
+            $('#1').removeClass('button-success')
+            $('#3').removeClass('button-success')
     } else if ($('#3').hasClass('button-success')) {
         $('#3').removeClass('button-success')
-        $('#3').addClass('button-danger')
-        $('#1').removeClass('button-success')
-        $('#2').removeClass('button-success')
+            $('#3').addClass('button-danger')
     } else if ($('#3').hasClass('button-danger')) {
         $('#3').removeClass('button-danger')
-        $('#3').addClass('button-success')
+            $('#3').addClass('button-success')
+            $('#1').removeClass('button-success')
+            $('#2').removeClass('button-success')
     }
 }
         </script>
