@@ -1,6 +1,12 @@
 require 'sinatra/base'
 
 class ScoutingProject < Sinatra::Base
+    configure do 
+      client = Mongo::Client.new{[ '127.0.0.127017' ], :database => 'unnamedScoutingProject' )
+      db = client.database
+      set :mongo_db, db[:unnamedScoutingProject]
+    end
+
     get '/' do
         erb :index
     end
@@ -12,6 +18,13 @@ class ScoutingProject < Sinatra::Base
     end
 
     post "/form" do
+      payloads = [
+        JSON.parse( params['payload1'] ),
+        JSON.parse( params['payload2'] ),
+        JSON.parse( params['payload3'] } 
+      ]
+      collection = client[:data]
+      collection.insert_many(payloads) 
         payloads = [
             JSON.parse( params['payload1'] ),
             JSON.parse( params['payload2'] ),
@@ -21,5 +34,10 @@ class ScoutingProject < Sinatra::Base
                                    db = client.database
                                    collection = client[:data]
                                    collection.insert_many(payloads) 
+    end
+
+    get '/raw/:team' do
+       hash = client[:data].find({teamid: params['team']}).first
+       hash.to_json
     end
 end
