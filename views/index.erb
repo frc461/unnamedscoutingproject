@@ -10,7 +10,6 @@
                 content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
                 />
         <script>
-
 $(function() {
     $('button[data-ctr-action]').click(function() {
         id = $(this).data('ctr-id');
@@ -98,131 +97,174 @@ function getm(e) {
 }
 function fail(e) {
     /*
-    if ($('#fail').hasClass('btn-dark')) {
-        $('#fail').removeClass('btn-dark');
-        $('#fail').addClass('btn-light');
-    } else if ($('#fail').hasClass('btn-light')) {
-        $('#fail').removeClass('btn-light');
-        $('#fail').addClass('btn-dark');
-    } else if ($('#fail2').hasClass('btn-dark')) {
-        $('#fail2').removeClass('btn-dark');
-        $('#fail2').addClass('btn-light');
-    } else if ($('#fail2').hasClass('btn-light')) {
-        $('#fail2').removeClass('btn-light');
-        $('#fail2').addClass('btn-dark');
-    } else if ($('#fail3').hasClass('btn-dark')) {
-        $('#fail3').removeClass('btn-dark');
-        $('#fail3').addClass('btn-light');
-    } else if ($('#fail3').hasClass('btn-light')) {
-        $('#fail3').removeClass('btn-light');
-        $('#fail3').addClass('btn-dark');
-        }*/
+       if ($('#fail').hasClass('btn-dark')) {
+       $('#fail').removeClass('btn-dark');
+       $('#fail').addClass('btn-light');
+       } else if ($('#fail').hasClass('btn-light')) {
+       $('#fail').removeClass('btn-light');
+       $('#fail').addClass('btn-dark');
+       } else if ($('#fail2').hasClass('btn-dark')) {
+       $('#fail2').removeClass('btn-dark');
+       $('#fail2').addClass('btn-light');
+       } else if ($('#fail2').hasClass('btn-light')) {
+       $('#fail2').removeClass('btn-light');
+       $('#fail2').addClass('btn-dark');
+       } else if ($('#fail3').hasClass('btn-dark')) {
+       $('#fail3').removeClass('btn-dark');
+       $('#fail3').addClass('btn-light');
+       } else if ($('#fail3').hasClass('btn-light')) {
+       $('#fail3').removeClass('btn-light');
+       $('#fail3').addClass('btn-dark');
+       }*/
     if($(e).hasClass('btn-dark')){
         $(e).removeClass('btn-dark').addClass('btn-light');
     }else{
         $(e).removeClass('btn-light').addClass('btn-dark');
     }
 }
+var slider = document.getElementById("driverRating");
+var output = document.getElementById("rating");
+output.innerHTML = slider.value; // Display the default slider value
+
+slider.oninput = function() {
+    output.innerHTML = this.value;
+}
+if ($('driverRating').data('value') == 1) {
+    element.style.setProperty("-red", 255,0,0);
+} else if ($('driverRating').data('value') == 3) { 
+    element.style.setProperty("--green", 0,255,0);
+} else if ($('driverRating').data('value') == 5) { 
+    element.style.setProperty("--blue", 0,0,255);
+}
         </script>
     </head>    
     <body>
         <div class="container-fluid">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-pause="true">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" style="padding:10px">
-                        <div class="row">    
-                            <div class="col-sm-12">
-                                <div class="row">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item" style="padding:10px">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <%= partial :name, locals: {name: "Name",teamid: "461"}%>
-                                        <%= partial :button, locals: {name: "Cross",teamid: "461"}%>
-                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
-                                    </div>
-                                    <div class="col-sm-4"> 
-                                        <%= partial :name, locals: {name: "Name",teamid: "462"}%>
-                                        <%= partial :button, locals: {name: "Cross",teamid: "462"}%>
-                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "462"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
-                                    </div>
-                                    <div class="col-sm-4"> 
-                                        <%= partial :name, locals: {name: "Name",teamid: "463"}%>
-                                        <%= partial :button, locals: {name: "Cross",teamid: "463"}%>
-                                        <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "463"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
-                                    </div>    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item" style="padding:10px">
-                        <div class="row">    
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <%= partial :name, locals: {name: "Name",teamid: "461"}%>
-                                        <%= partial :counter, locals: {label: "Alliance Switch", id: 'tele-all-switch',teamid: "461"} %>
-                                        <%= partial :counter, locals: {label: "Opponent Switch", id: 'tele-opp-switch',teamid: "461"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "461"} %>
-                                        <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "461"} %>
-                                        <%= partial :button, locals: {name: "Park",teamid: "461"}%>
-                                        <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
-                                        <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "461"}%>
-                                        <%= partial :button1, locals: {lel: "fail", teamid: "461"}%>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <%= partial :name, locals: {name: "Name",teamid: "462"}%>
-                                        <%= partial :counter, locals: {label: "Alliance Switch", id: 'auto-all-switch',teamid: "462"} %>
-                                        <%= partial :counter, locals: {label: "Oppenent Switch", id: 'auto-opp-scale',teamid: "462"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
-                                        <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "462"} %>
-                                        <%= partial :button, locals: {name: "Park",teamid: "462"}%>
-                                        <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "462"}%>
-                                        <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "462"}%>
-                                        <%= partial :button1, locals: {lel: "fail2", teamid: "462"}%>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <%= partial :name, locals: {name: "Name",teamid: "463"}%>
-                                        <%= partial :counter, locals: {label: "Alliance Switch", id: 'auto-switch',teamid: "463"} %>
-                                        <%= partial :counter, locals: {label: "Oppenent Switch", id: 'auto-scale',teamid: "463"} %>
-                                        <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
-                                        <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "463"} %>
-                                        <%= partial :button, locals: {name: "Park",teamid: "463"}%>
-                                        <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "463"}%>
-                                        <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "463"}%>
-                                        <%= partial :button1, locals: {lel: "fail3", teamid: "463"}%>
+            <div class="row">
+                <div id="carouselExampleControls" style="width:100%" class="carousel slide" data-ride="carousel" data-pause="true">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="padding:10px">
+                            <div class="row">    
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "461"}%>
+                                            <%= partial :singlechoose, locals: {name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "462"}%>
+                                            <%= partial :singlechoose, locals: {name1: "Left",name2: "Mid",name3: "Right",teamid: "462"}%>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "463"}%>
+                                            <%= partial :singlechoose, locals: {name1: "Left",name2: "Mid",name3: "Right",teamid: "463"}%>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="carousel-item" style="padding:10px">
-                        <div class="row">    
-                            <div class="col-sm-12">
-                                <div class="row">
+                        <div class="carousel-item" style="padding:10px">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "461"}%>
+                                            <%= partial :button, locals: {name: "Cross",teamid: "461"}%>
+                                            <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
+                                            <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
+                                        </div>
+                                        <div class="col-sm-4"> 
+                                            <%= partial :name, locals: {name: "Name",teamid: "462"}%>
+                                            <%= partial :button, locals: {name: "Cross",teamid: "462"}%>
+                                            <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "462"} %>
+                                            <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
+                                        </div>
+                                        <div class="col-sm-4"> 
+                                            <%= partial :name, locals: {name: "Name",teamid: "463"}%>
+                                            <%= partial :button, locals: {name: "Cross",teamid: "463"}%>
+                                            <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "463"} %>
+                                            <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
+                                        </div>    
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="carousel-item" style="padding:10px">
+                            <div class="row">    
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "461"}%>
+                                            <%= partial :counter, locals: {label: "Alliance Switch", id: 'tele-all-switch',teamid: "461"} %>
+                                            <%= partial :counter, locals: {label: "Opponent Switch", id: 'tele-opp-switch',teamid: "461"} %>
+                                            <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "461"} %>
+                                            <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "461"} %>
+                                            <%= partial :button, locals: {name: "Park",teamid: "461"}%>
+                                            <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
+                                            <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "461"}%>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "462"}%>
+                                            <%= partial :counter, locals: {label: "Alliance Switch", id: 'auto-all-switch',teamid: "462"} %>
+                                            <%= partial :counter, locals: {label: "Oppenent Switch", id: 'auto-opp-scale',teamid: "462"} %>
+                                            <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
+                                            <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "462"} %>
+                                            <%= partial :button, locals: {name: "Park",teamid: "462"}%>
+                                            <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "462"}%>
+                                            <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "462"}%>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "463"}%>
+                                            <%= partial :counter, locals: {label: "Alliance Switch", id: 'auto-switch',teamid: "463"} %>
+                                            <%= partial :counter, locals: {label: "Oppenent Switch", id: 'auto-scale',teamid: "463"} %>
+                                            <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
+                                            <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "463"} %>
+                                            <%= partial :button, locals: {name: "Park",teamid: "463"}%>
+                                            <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "463"}%>
+                                            <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "463"}%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="padding:10px">
+                            <div class="row">    
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <%= partial :button1, locals: {lel: "fail", teamid: "461"}%>
+                                            <%= partial :rating, locals: {teamid: "461"}%>
+                                            <textarea rows="13" style="width:100%"></textarea>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= partial :button1, locals: {lel: "fail2", teamid: "462"}%>
+                                            <%= partial :rating, locals: {teamid: "462"}%>
+                                            <textarea rows="13" style="width:100%"></textarea>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= partial :button1, locals: {lel: "fail3", teamid: "463"}%>
+                                            <%= partial :rating, locals: {teamid: "463"}%>
+                                            <textarea rows="13" style="width:100%"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-dark btn-lg btn-block">Submit</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row" style="padding:10px;padding-top:20px">
-                        <div class="col-sm-2">
-                            <button type="button" onclick="gqFunction()" class="btn btn-info btn-block">Prev</button>
-                        </div>
-                        <div class="col-sm-8">
-                            <center><span id="indicator" class="pre badge badge-primary">Pre</span></center>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" onclick="qFunction()" class="btn btn-info btn-block">Next</button>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding:10px;padding-top:20px" id="pid">
+                <div class="col-sm-2">
+                    <button type="button" onclick="gqFunction()" class="btn btn-info btn-block">Prev</button>
+                </div>
+                <div class="col-sm-8">
+                    <center><span id="indicator" class="pre badge badge-primary">Pre</span></center>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" onclick="qFunction()" class="btn btn-info btn-block">Next</button>
                 </div>
             </div>
         </div>
