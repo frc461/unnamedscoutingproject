@@ -39,20 +39,6 @@ body {
     min-width:100%;
 }
 .contain-fluid {
-    min-height:100VH;
+    min-height:588px;
 
-}
-#coloredSlider {
-    float: left;
-    clear: left;
-    width: 600px;
-    margin: 15px;
-}
-#coloredSlider .ui-slider-range { 
-    background: #ff0000; 
-}
-
-#coloredSlider .ui-state-default, .ui-widget-content .ui-state-default {
-    background: none;
-    background-color: #FFF;
 }

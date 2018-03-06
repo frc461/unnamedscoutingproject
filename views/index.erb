@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/css/global.css"></link>
         <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
         <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <meta 
                 name='viewport' 
@@ -28,11 +29,9 @@ $(function() {
     $('button[data-btn-action]').click(function() {
         console.log($(this));
         if($(this).hasClass('btn-success')) {
-            console.log('whoo');
             $(this).removeClass('btn-success');
             $(this).addClass('btn-danger');
         } else { 
-            console.log('whee');
             $(this).addClass('btn-success');
             $(this).removeClass('btn-danger');
         }
@@ -95,6 +94,12 @@ function getm(e) {
     tmpObj.removeClass('btn-success');
     tmpObj.addClass('btn-danger');
 }
+function getmn(e) {
+    var teamid = $(e).data('teamid');
+    var tmpObj = $('button[data-teamid="' + teamid + '"].rate');
+    tmpObj.removeClass('btn-success');
+    tmpObj.addClass('btn-danger');
+}
 function fail(e) {
     /*
        if ($('#fail').hasClass('btn-dark')) {
@@ -122,13 +127,9 @@ function fail(e) {
         $(e).removeClass('btn-light').addClass('btn-dark');
     }
 }
-var slider = document.getElementById("driverRating");
-var output = document.getElementById("rating");
-output.innerHTML = slider.value; // Display the default slider value
-
         </script>
     </head>    
-    <body>
+    <body style="height:578px">
         <div class="container-fluid">
             <div class="row">
                 <div id="carouselExampleControls" style="width:100%" class="carousel slide" data-ride="carousel" data-pause="true">
@@ -192,7 +193,6 @@ output.innerHTML = slider.value; // Display the default slider value
                                             <%= partial :button, locals: {name: "Park",teamid: "461"}%>
                                             <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
                                             <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "461"}%>
-                                            <%= partial :button1, locals: {lel: "fail", teamid: "461"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
@@ -203,7 +203,6 @@ output.innerHTML = slider.value; // Display the default slider value
                                             <%= partial :button, locals: {name: "Park",teamid: "462"}%>
                                             <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "462"}%>
                                             <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "462"}%>
-                                            <%= partial :button1, locals: {lel: "fail2", teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
@@ -214,7 +213,6 @@ output.innerHTML = slider.value; // Display the default slider value
                                             <%= partial :button, locals: {name: "Park",teamid: "463"}%>
                                             <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "463"}%>
                                             <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "463"}%>
-                                            <%= partial :button1, locals: {lel: "fail3", teamid: "463"}%>
                                         </div>
                                     </div>
                                 </div>
@@ -225,19 +223,22 @@ output.innerHTML = slider.value; // Display the default slider value
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                                             <%= partial :button1, locals: {lel: "fail", teamid: "461"}%>
                                             <%= partial :rating, locals: {teamid: "461"}%>
-                                            <textarea rows="13" style="width:100%"></textarea>
+                                            <textarea rows="12" style="width:100%"></textarea>
                                         </div>
                                         <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :button1, locals: {lel: "fail2", teamid: "462"}%>
                                             <%= partial :rating, locals: {teamid: "462"}%>
-                                            <textarea rows="13" style="width:100%"></textarea>
+                                            <textarea rows="12" style="width:100%"></textarea>
                                         </div>
                                         <div class="col-sm-4">
+                                            <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :button1, locals: {lel: "fail3", teamid: "463"}%>
                                             <%= partial :rating, locals: {teamid: "463"}%>
-                                            <textarea rows="13" style="width:100%"></textarea>
+                                            <textarea rows="12" style="width:100%"></textarea>
                                         </div>
                                     </div>
                                 </div>
