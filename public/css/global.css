@@ -1,6 +1,5 @@
 body {
     background-color: #f2eff0;
-    min-height:100VH;
 }
 .slidecontainer {
     width: 100%;
@@ -40,5 +39,10 @@ body {
 }
 .contain-fluid {
     min-height:588px;
+}
 
+@media (max-height: 200px) {
+    #pid {
+        display: none;
+    }
 }

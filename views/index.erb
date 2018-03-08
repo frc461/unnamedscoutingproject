@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/css/global.css"></link>
         <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="/css/global.css"></link>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -41,6 +41,20 @@ $(function() {
     $('.carousel').carousel('pause');
 
 });
+function submit() {
+    $('input[type=text][data-teamid]').toArray().map(function(e) {return $(e).data('teamid')}).forEach(function(teamNumber) {
+        set = $('[data-teamid=' + teamNumber + ']').filter(function(i, e) {
+            e = $(e);
+            if(e.val() == teamNumber) { return false; }
+            if(e.html() == "+" || e.html() == "-") { return false; }
+            if(e.hasClass('badge')) { return false; }
+            if(e.hasClass('btn-info')) {return false;}
+            return true;
+        });
+
+        console.log(set.toArray());
+    });
+}
 function qFunction() {
     console.log($(indicator));
     $('.carousel').carousel('next');
@@ -84,19 +98,13 @@ function gqFunction() {
 }
 function getn(e) {
     var teamid = $(e).data('teamid');
-    var tmpObj = $('button[data-teamid="' + teamid + '"].single');
-    tmpObj.removeClass('btn-success');
-    tmpObj.addClass('btn-danger');
-}
-function getm(e) {
-    var teamid = $(e).data('teamid');
-    var tmpObj = $('button[data-teamid="' + teamid + '"].double');
+    tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].single');
     tmpObj.removeClass('btn-success');
     tmpObj.addClass('btn-danger');
 }
 function getmn(e) {
     var teamid = $(e).data('teamid');
-    var tmpObj = $('button[data-teamid="' + teamid + '"].rate');
+    tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].rate');
     tmpObj.removeClass('btn-success');
     tmpObj.addClass('btn-danger');
 }
@@ -127,9 +135,17 @@ function fail(e) {
         $(e).removeClass('btn-light').addClass('btn-dark');
     }
 }
+var teamTarget;
+function upDateteamnum(e) {
+    v = $(e).parent().find('input[type=text]').val();
+    c = $(e).data('teamid');
+    console.log(v + ' ' + c);
+    teamTarget =$('[data-teamid='+c+']').attr('data-teamid', v);
+    $('span.badge[data-teamid='+v+']').html(v);
+}
         </script>
     </head>    
-    <body style="height:578px">
+    <body style="height:500px">
         <div class="container-fluid">
             <div class="row">
                 <div id="carouselExampleControls" style="width:100%" class="carousel slide" data-ride="carousel" data-pause="true">
@@ -141,14 +157,20 @@ function fail(e) {
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                                             <%= partial :singlechoose, locals: {name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
+                                            <input type="text" data-teamid="461" value="461"></input>
+                                            <button class="btn btn-info" data-teamid="461" onClick="upDateteamnum(this)">upDate</button>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :singlechoose, locals: {name1: "Left",name2: "Mid",name3: "Right",teamid: "462"}%>
+                                            <input type="text" data-teamid="462" value="462"></input>
+                                            <button class="btn btn-info" data-teamid="462" onClick="upDateteamnum(this)">upDate</button>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :singlechoose, locals: {name1: "Left",name2: "Mid",name3: "Right",teamid: "463"}%>
+                                            <input type="text" data-teamid="463" value="463"></input>
+                                            <button class="btn btn-info" data-teamid="463" onClick="upDateteamnum(this)">upDate</button>
                                         </div>
                                     </div>
                                 </div>
@@ -190,9 +212,8 @@ function fail(e) {
                                             <%= partial :counter, locals: {label: "Opponent Switch", id: 'tele-opp-switch',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "461"} %>
-                                            <%= partial :button, locals: {name: "Park",teamid: "461"}%>
                                             <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
-                                            <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "461"}%>
+                                            <%= partial :choose, locals: {pgh1: "Park",pgh2: "Ground",pgh3: "Human",teamid: "461"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
@@ -200,9 +221,8 @@ function fail(e) {
                                             <%= partial :counter, locals: {label: "Oppenent Switch", id: 'tele-opp-switch',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "462"} %>
-                                            <%= partial :button, locals: {name: "Park",teamid: "462"}%>
                                             <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "462"}%>
-                                            <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "462"}%>
+                                            <%= partial :choose, locals: {pgh1: "Park",pgh2: "Ground",pgh3: "Human",teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
@@ -210,9 +230,8 @@ function fail(e) {
                                             <%= partial :counter, locals: {label: "Oppenent Switch", id: 'tele-opp-switch',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "463"} %>
-                                            <%= partial :button, locals: {name: "Park",teamid: "463"}%>
                                             <%= partial :singlechoose, locals: {name1: "No",name2: "Yes",name3: "Fast",teamid: "463"}%>
-                                            <%= partial :doublebut, locals: {name11: "Ground",name22: "Human",teamid: "463"}%>
+                                            <%= partial :choose, locals: {pgh1: "Park",pgh2: "Ground",pgh3: "Human",teamid: "463"}%>
                                         </div>
                                     </div>
                                 </div>
@@ -226,25 +245,25 @@ function fail(e) {
                                             <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                                             <%= partial :button1, locals: {lel: "fail", teamid: "461"}%>
                                             <%= partial :rating, locals: {teamid: "461"}%>
-                                            <textarea rows="12" style="width:100%"></textarea>
+                                            <textarea rows="5" style="width:100%"></textarea>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :button1, locals: {lel: "fail2", teamid: "462"}%>
                                             <%= partial :rating, locals: {teamid: "462"}%>
-                                            <textarea rows="12" style="width:100%"></textarea>
+                                            <textarea rows="5" style="width:100%"></textarea>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :button1, locals: {lel: "fail3", teamid: "463"}%>
                                             <%= partial :rating, locals: {teamid: "463"}%>
-                                            <textarea rows="12" style="width:100%"></textarea>
+                                            <textarea rows="5" style="width:100%"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <button type="button" class="btn btn-dark btn-lg btn-block">Submit</button>
+                                <button type="button" onClick="submit()" class="btn btn-dark btn-lg btn-block">Submit</button>
                             </div>
                         </div>
                     </div>
