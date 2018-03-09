@@ -39,6 +39,16 @@
         $('.carousel').carousel('pause');
 
       });
+function alliance() {
+    if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $(this).addClass('no');
+    } else if ($(this).hasClass('no')) {
+        $(this).removeClass('no');
+        $(this).addClass('active');
+    }
+    var alliancecolor = $()
+}
 function submit() {
   location.reload();
   parts = [];
@@ -198,6 +208,10 @@ function upDateteamnum(e) {
 
                       <br><br>
                       <input class="form-control w-100 text-center" type="text" id="matchNumber" value="Q00"></input>
+                      <div class="row">
+                      <button class="btn btn-danger active" onClick="alliance()" style="width:50%">Red</button>
+                      <button class="btn btn-primary" onClick="alliance()" style="width:50%">Blue</button>
+                      </div>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "463"}%>
