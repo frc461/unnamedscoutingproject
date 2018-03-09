@@ -10,6 +10,7 @@ class ScoutingProject < Sinatra::Base
 
   get '/' do
     erb :index
+    
   end
 
   helpers do
