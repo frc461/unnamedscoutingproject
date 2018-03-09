@@ -28,7 +28,6 @@ class ScoutingProject < Sinatra::Base
     settings.mongo_db.insert_many(payloads) 
   end
 
-<<<<<<< HEAD
     get '/raw/:team' do
        hash = client[:data].find({teamid: params['team']}).first
        hash.to_json
@@ -39,25 +38,14 @@ class ScoutingProject < Sinatra::Base
     end
 
     post '/scoutmaster/redsubmit' do
-      data = {R1: params['R1'], ...
-      collection.find(???).update(data)
+      #data = {R1: params['R1'], ...
+      #collection.find(???).update(data)
       "OK"
     end
     
     post '/scoutmaster/bluesubmit' do
-      data = {B1: params['B1'], ...
-      collection.find(???).update(data)
+      #data = {B1: params['B1'], ...
+      #collection.find(???).update(data)
       "OK"
     end
-=======
-  get '/raw' do
-    content_type :json
-    settings.mongo_db.find().to_a.to_json
-  end
-
-  get '/raw/:team' do
-    content_type :json
-    settings.mongo_db.find({team: params['team']}).to_a.to_json
-  end
->>>>>>> 2a1b21fb96cae5bd857d7671e5f7945b375fa465
 end
