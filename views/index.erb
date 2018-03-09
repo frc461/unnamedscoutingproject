@@ -40,6 +40,7 @@
 
       });
 function submit() {
+  location.reload();
   parts = [];
   $('input[type=text][data-teamid]').toArray().map(function(e) {return $(e).data('teamid')}).forEach(function(teamNumber) {
     payload = {};
