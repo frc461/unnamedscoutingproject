@@ -40,4 +40,20 @@ class ScoutingProject < Sinatra::Base
        hash = client[:data].find({teamid: params['team']}).first
        hash.to_json
     end
+
+    get '/scoutmaster' do
+	erb :scoutmaster	
+    end
+
+    post '/scoutmaster/redsubmit' do
+      data = {R1: params['R1'], ...
+      collection.find(???).update(data)
+      "OK"
+    end
+    
+    post '/scoutmaster/bluesubmit' do
+      data = {B1: params['B1'], ...
+      collection.find(???).update(data)
+      "OK"
+    end
 end
