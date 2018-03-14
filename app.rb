@@ -9,11 +9,15 @@ class ScoutingProject < Sinatra::Base
   end
 
   get '/' do
-    data = settings.mongo_db.find({futurematch: true}).first
+    unless data = settings.mongo_db.find({futurematch: true}).first
+      settings.mongo_db.insert_one({futurematch: true, R1: '', R2: '', R3: '', B1: '', B2: '', B3: '', MN: '', EV: ''})
+      data = settings.mongo_db.find({futurematch: true}).first
+    end
     @R1 = data['R1']
     @R2 = data['R2']
     @R3 = data['R3']
     @MN = data['MN']
+    @EV = data['EV']
     @B1 = data['B1']
     @B2 = data['B2']
     @B3 = data['B3']
@@ -35,24 +39,40 @@ class ScoutingProject < Sinatra::Base
     settings.mongo_db.insert_many(payloads) 
   end
 
+  get '/raw' do
+      hash = settings.mongo_db.find({teamid: true })
+       hash.to_json
+    end
+
+
     get '/raw/:team' do
-       hash = client[:data].find({teamid: params['team']}).first
+      hash = settings.mongo_db.find({teamid: params['team']}).first
        hash.to_json
     end
 
     get '/scoutmaster' do
+    unless data = settings.mongo_db.find({futurematch: true}).first
+      settings.mongo_db.insert_one({futurematch: true, R1: '', R2: '', R3: '', B1: '', B2: '', B3: '', MN: '', EV: ''})
+      data = settings.mongo_db.find({futurematch: true}).first
+    end
+    @R1 = data['R1']
+    @R2 = data['R2']
+    @R3 = data['R3']
+    @MN = data['MN']
+    @EV = data['EV']
+    @B1 = data['B1']
+    @B2 = data['B2']
+    @B3 = data['B3']
 	erb :scoutmaster	
     end
 
-    post '/scoutmaster/redsubmit' do
-      data = {R1: params['R1'], R2: params['R2'], R3: params['R3']}
-      collection.find({futurematch: true}).update(data)
-      "OK"
+    get '/future' do
+      settings.mongo_db.find({futurematch: true}).first.to_json
     end
-    
-    post '/scoutmaster/bluesubmit' do
-      data = {B1: params['B1'], B2: params['B2'], B3: params['B3']}
-      collection.find({futurematch: true}).update(data)
-      "OK"
+
+    post '/scoutmaster/submit' do
+      data = {R1: params['R1'], R2: params['R2'], R3: params['R3'], B1: params['B1'], B2: params['B2'], B3: params['B3'], MN: params['MN'], EV: params['EV']}
+      settings.mongo_db.find_one_and_update({futurematch: true}, {'$set' => data})
+      redirect '/scoutmaster'
     end
 end

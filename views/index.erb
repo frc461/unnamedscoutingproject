@@ -39,22 +39,42 @@
         $('.carousel').carousel('pause');
 
       });
-function alliance() {
-    if ($(this).hasClass('active')) {
-        $(this).removeClass('active');
-        $(this).addClass('no');
-    } else if ($(this).hasClass('no')) {
-        $(this).removeClass('no');
-        $(this).addClass('active');
-    }
-    var alliancecolor = $()
+
+function redAlliance() {
+  $.get('/future', function(d) {
+    data = JSON.parse(d);
+    $('[data-team-field=1]').val(data.R1);
+    $('[data-team-field=2]').val(data.R2);
+    $('[data-team-field=3]').val(data.R3);
+    $('#matchNumber').val(data.MN);
+    $('#eventID').val(data.EV);
+
+    $('[data-team-button=1]').click();
+    $('[data-team-button=2]').click();
+    $('[data-team-button=3]').click();
+  });
 }
+
+function blueAlliance() {
+  $.get('/future', function(d) {
+    data = JSON.parse(d);
+    $('[data-team-field=1]').val(data.B1);
+    $('[data-team-field=2]').val(data.B2);
+    $('[data-team-field=3]').val(data.B3);
+    $('#matchNumber').val(data.MN);
+    $('#eventID').val(data.EV);
+
+    $('[data-team-button=1]').click();
+    $('[data-team-button=2]').click();
+    $('[data-team-button=3]').click();
+  });
+}
+
 function submit() {
-  location.reload();
   parts = [];
   $('input[type=text][data-teamid]').toArray().map(function(e) {return $(e).data('teamid')}).forEach(function(teamNumber) {
     payload = {};
-    payload['team'] = "" + teamNumber;
+    payload['team'] = "" + $('.badge[data-teamid=' + teamNumber + ']').html();
     payload['match'] = $('#matchNumber').val();
     set = $('[data-teamid=' + teamNumber + ']').filter(function(i, e) {
       e = $(e);
@@ -84,12 +104,13 @@ function submit() {
     });
 
     payload['fail'] = set.filter('[data-fail]').hasClass('btn-danger') ? '1' : '-';
+    payload['comment'] = set.filter('textarea').val();
 
     parts.push(JSON.stringify(payload));
   });
 
   $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2]}, function(e) {
-    console.log(e);
+    location.reload();
   });
 
 }
@@ -173,13 +194,10 @@ function fail(e) {
     $(e).removeClass('btn-danger').addClass('btn-dark');
   }
 }
-var teamTarget;
 function upDateteamnum(e) {
   v = $(e).parent().find('input[type=text]').val();
   c = $(e).data('teamid');
-  console.log(v + ' ' + c);
-  teamTarget =$('[data-teamid='+c+']').attr('data-teamid', v);
-  $('span.badge[data-teamid='+v+']').html(v);
+  $('span.badge[data-teamid='+c+']').html(v);
 }
     </script>
   </head>    
@@ -194,29 +212,34 @@ function upDateteamnum(e) {
                   <div class="row">
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "461"}%>
-                      <input type="text" data-teamid="461" value="461"></input>
-                      <button class="btn btn-info" data-teamid="461" onClick="upDateteamnum(this)">Update</button>
+                      <input type="text" data-teamid="461" value="461" data-team-field="1"></input>
+                      <button class="btn btn-info" data-teamid="461" onClick="upDateteamnum(this)" data-team-button="1">Update</button>
                       <br><br>
                       <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "462"}%>
-                      <input type="text" data-teamid="462" value="462"></input>
-                      <button class="btn btn-info" data-teamid="462" onClick="upDateteamnum(this)">upDate</button>
+                      <input type="text" data-teamid="462" value="462" data-team-field="2"></input>
+                      <button class="btn btn-info" data-teamid="462" onClick="upDateteamnum(this)" data-team-button="2">upDate</button>
                       <br><br>
                       <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "462"}%>
 
-                      <br><br>
-                      <input class="form-control w-100 text-center" type="text" id="matchNumber" value="Q00"></input>
+                      <br>
+                      Match #
+                      <input class="form-control w-100 text-center" type="text" id="matchNumber" value="<%= @MN %>"></input>
+                      <br>
+                      Event ID
+                      <input class="form-control w-100 text-center" type="text" id="eventID" value="<%= @EV %>"></input>
+                      <br>
                       <div class="row">
-                      <button class="btn btn-danger active" onClick="alliance()" style="width:50%">Red</button>
-                      <button class="btn btn-primary" onClick="alliance()" style="width:50%">Blue</button>
+                      <button class="btn btn-danger" onClick="redAlliance()" style="width:50%">Load Red</button>
+                      <button class="btn btn-primary" onClick="blueAlliance()" style="width:50%">Load Blue</button>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "463"}%>
-                      <input type="text" data-teamid="463" value="463"></input>
-                      <button class="btn btn-info" data-teamid="463" onClick="upDateteamnum(this)">upDate</button>
+                      <input type="text" data-teamid="463" value="463" data-team-field="3"></input>
+                      <button class="btn btn-info" data-teamid="463" onClick="upDateteamnum(this)" data-team-button="3">upDate</button>
                       <br><br>
                       <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "463"}%>
                     </div>
@@ -292,20 +315,23 @@ function upDateteamnum(e) {
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                       <%= partial :button1, locals: {teamid: "461"}%>
+                      <p class="text-center mb-0 mt-3">Driver Skill Rating</p>
                       <%= partial :rating, locals: {teamid: "461"}%>
-                      <textarea rows="5" style="width:100%"></textarea>
+                      <textarea rows="5" data-teamid="461" style="width:100%"></textarea>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                       <%= partial :button1, locals: {teamid: "462"}%>
+                      <p class="text-center mb-0 mt-3">Driver Skill Rating</p>
                       <%= partial :rating, locals: {teamid: "462"}%>
-                      <textarea rows="5" style="width:100%"></textarea>
+                      <textarea rows="5" data-teamid="462" style="width:100%"></textarea>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                       <%= partial :button1, locals: {teamid: "463"}%>
+                      <p class="text-center mb-0 mt-3">Driver Skill Rating</p>
                       <%= partial :rating, locals: {teamid: "463"}%>
-                      <textarea rows="5" style="width:100%"></textarea>
+                      <textarea rows="5" data-teamid="463" style="width:100%"></textarea>
                     </div>
                   </div>
                 </div>

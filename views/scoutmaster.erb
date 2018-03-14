@@ -1,39 +1,55 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="/css/global.css"</link>
-        <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+  <head>
+    <link rel="stylesheet" href="/css/global.css"</link>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
     <meta
-        name='viewpoint'
-        content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-        />
-    </head>
+            name='viewpoint'
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+            />
+  </head>
 
-    <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <form action="/red_submit">
-                        Red Alliance One: <input type="text" name="R1">
-                        Red Alliance Two: <input type="text" name="R2">
-                        Red Alliance Three: <input type="text" name=R3">
-			Match Number: <input type="text" name="MN">
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-		    <form action="blue_submit">
-			Blue Alliance One: <input type="text" name="B1">
-			Blue Alliance Two: <input type="text" name="B2">
-			Blue Alliance Three: <input type="text" name="B3">
-			Match Number: <input tupe="text" name="MN">
-			<input type="submit" value="Submit">
-		    </form>
-		</div>
-	    </div>
-	</div>
-    </body>
+  <body>
+    <div class="container-fluid">
+      <form action="/scoutmaster/submit" method="POST">
+        <div class="row">
+          <div class="col-4">
+            Blue Alliance One: <input type="number" autocomplete="false" name="B1" value="<%= @B1 %>">
+          </div>
+          <div class="col-4">
+            Blue Alliance Two: <input type="number" autocomplete="false" name="B2" value="<%= @B2 %>">
+          </div>
+          <div class="col-4">
+            Blue Alliance Three: <input type="number" autocomplete="false" name="B3" value="<%= @B3 %>">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            Red Alliance One: <input type="number" autocomplete="false" name="R1" value="<%= @R1 %>">
+          </div>
+          <div class="col-4">
+            Red Alliance Two: <input type="number" autocomplete="false" name="R2" value="<%= @R2 %>">
+          </div>
+          <div class="col-4">
+            Red Alliance Three: <input type="number" autocomplete="false" name="R3" value="<%= @R3 %>">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-4">
+            Event: <input type="text" name="EV" value="<%= @EV %>">
+          </div>
+          <div class="col-4">
+            Match: <input type="text" name="MN" value="<%= @MN %>">
+          </div>
+          <div class="col-4 text-right">
+            <input type="submit" value="Submit" class="btn btn-block btn-primary">
+          </div>
+      </form>
+        </div>
+        <script>
+$('input[type=number]').focus(function() {$(this).val('');});
+        </script>
+  </body>

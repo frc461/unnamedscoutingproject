@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'sinatra'
-gem 'mongo'
+gem 'mongo', '2.4.1'
 
