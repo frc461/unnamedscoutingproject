@@ -2,16 +2,22 @@
 <html>
   <head>
     <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/css/toastr.min.css"></link>
     <link rel="stylesheet" href="/css/global.css"></link>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="/faye/faye.js"></script>
     <meta 
             name='viewport' 
             content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
             />
-    <script>
+            <script>
+var faye;
+var color;
       $(function() {
+        faye = new Faye.Client('/faye');
         $('button[data-ctr-action]').click(function() {
           id = $(this).data('ctr-id');
           teamid = $(this).data('teamid');
@@ -52,6 +58,7 @@ function redAlliance() {
     $('[data-team-button=1]').click();
     $('[data-team-button=2]').click();
     $('[data-team-button=3]').click();
+    color = "red";
   });
 }
 
@@ -67,12 +74,15 @@ function blueAlliance() {
     $('[data-team-button=1]').click();
     $('[data-team-button=2]').click();
     $('[data-team-button=3]').click();
+    color = "blue";
   });
 }
 
 function submit() {
   parts = [];
+  teamnos = [];
   $('input[type=text][data-teamid]').toArray().map(function(e) {return $(e).data('teamid')}).forEach(function(teamNumber) {
+    teamnos.push("" + $('.badge[data-teamid=' + teamNumber + ']').html());
     payload = {};
     payload['team'] = "" + $('.badge[data-teamid=' + teamNumber + ']').html();
     payload['match'] = $('#matchNumber').val();
@@ -110,6 +120,7 @@ function submit() {
   });
 
   $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2]}, function(e) {
+    faye.publish('/submit', {color: color, teams: teamnos})
     location.reload();
   });
 

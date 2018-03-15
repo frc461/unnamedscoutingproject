@@ -1,9 +1,12 @@
 <html>
   <head>
-    <link rel="stylesheet" href="/css/global.css"</link>
     <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
+    <link rel="stylesheet" href="/css/global.css"</link>
+    <link rel="stylesheet" href="/css/toastr.min.css"></link>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="/faye/faye.js"></script>
 
     <meta
             name='viewpoint'
@@ -51,5 +54,13 @@
         </div>
         <script>
 $('input[type=number]').focus(function() {$(this).val('');});
+var faye;
+$(function() {
+  faye = new Faye.Client('/faye');
+
+  faye.subscribe('/submit', function(e) {
+    toastr.info('Submitted ' + e.teams.join(', '));
+  });
+})
         </script>
   </body>
