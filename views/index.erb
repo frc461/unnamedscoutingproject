@@ -17,6 +17,7 @@
 var faye;
 var color;
       $(function() {
+        upDate();
         faye = new Faye.Client('/faye');
         $('button[data-ctr-action]').click(function() {
           id = $(this).data('ctr-id');
@@ -46,35 +47,27 @@ var color;
 
       });
 
-function redAlliance() {
+function upDate() {
   $.get('/future', function(d) {
+    color = "<%= @color %>";
     data = JSON.parse(d);
+    if ("<%= @color %>" == 'red') {
     $('[data-team-field=1]').val(data.R1);
     $('[data-team-field=2]').val(data.R2);
     $('[data-team-field=3]').val(data.R3);
-    $('#matchNumber').val(data.MN);
-    $('#eventID').val(data.EV);
-
-    $('[data-team-button=1]').click();
-    $('[data-team-button=2]').click();
-    $('[data-team-button=3]').click();
-    color = "red";
-  });
-}
-
-function blueAlliance() {
-  $.get('/future', function(d) {
-    data = JSON.parse(d);
+    }
+    if ("<%= @color %>" == 'blue') {
     $('[data-team-field=1]').val(data.B1);
     $('[data-team-field=2]').val(data.B2);
     $('[data-team-field=3]').val(data.B3);
+    }    
+
     $('#matchNumber').val(data.MN);
     $('#eventID').val(data.EV);
 
     $('[data-team-button=1]').click();
     $('[data-team-button=2]').click();
     $('[data-team-button=3]').click();
-    color = "blue";
   });
 }
 
@@ -225,15 +218,19 @@ function upDateteamnum(e) {
                       <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                       <input type="text" data-teamid="461" value="461" data-team-field="1"></input>
                       <button class="btn btn-info" data-teamid="461" onClick="upDateteamnum(this)" data-team-button="1">Update</button>
+                      <input type="text" data-teamid="464" value="464" data-team-field="4"></input>
+                      <button class="btn btn-info" data-teamid="464" onClick="upDateteamnum(this)" data-team-button="4">Update</button>
                       <br><br>
                       <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
                     </div>
                     <div class="col-sm-4">
-                      <%= partial :name, locals: {name: "Name",teamid: "462"}%>
+                       <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                       <input type="text" data-teamid="462" value="462" data-team-field="2"></input>
-                      <button class="btn btn-info" data-teamid="462" onClick="upDateteamnum(this)" data-team-button="2">upDate</button>
+                      <button class="btn btn-info" data-teamid="462" onClick="upDateteamnum(this)" data-team-button="2">Update</button>
+                      <input type="text" data-teamid="465" value="465" data-team-field="5"></input>
+                      <button class="btn btn-info" data-teamid="465" onClick="upDateteamnum(this)" data-team-button="5">upDate</button>
                       <br><br>
-                      <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "462"}%>
+                      <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
 
                       <br>
                       Match #
@@ -242,17 +239,15 @@ function upDateteamnum(e) {
                       Event ID
                       <input class="form-control w-100 text-center" type="text" id="eventID" value="<%= @EV %>"></input>
                       <br>
-                      <div class="row">
-                      <button class="btn btn-danger" onClick="redAlliance()" style="width:50%">Load Red</button>
-                      <button class="btn btn-primary" onClick="blueAlliance()" style="width:50%">Load Blue</button>
-                      </div>
                     </div>
                     <div class="col-sm-4">
-                      <%= partial :name, locals: {name: "Name",teamid: "463"}%>
+                        <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                       <input type="text" data-teamid="463" value="463" data-team-field="3"></input>
-                      <button class="btn btn-info" data-teamid="463" onClick="upDateteamnum(this)" data-team-button="3">upDate</button>
+                      <button class="btn btn-info" data-teamid="463" onClick="upDateteamnum(this)" data-team-button="3">Update</button>
+                      <input type="text" data-teamid="466" value="466" data-team-field="6"></input>
+                      <button class="btn btn-info" data-teamid="466" onClick="upDateteamnum(this)" data-team-button="6">Update</button>
                       <br><br>
-                      <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "463"}%>
+                      <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
                     </div>
                   </div>
                 </div>
@@ -288,32 +283,28 @@ function upDateteamnum(e) {
               <div class="row">    
                 <div class="col-sm-12">
                   <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                       <%= partial :name, locals: {name: "Name",teamid: "461"}%>
-                      <%= partial :counter, locals: {label: "Alliance Switch", id: 'tele-all-switch',teamid: "461"} %>
-                      <%= partial :counter, locals: {label: "Opponent Switch", id: 'tele-opp-switch',teamid: "461"} %>
-                      <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "461"} %>
-                      <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "461"} %>
-                      <%= partial :singlechoose, locals: {datapoint: 'climb', name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
-                      <%= partial :choose, locals: {pgh1: "Park",pgh2: "Ground",pgh3: "Human",teamid: "461"}%>
+                      <%= partial :counter, locals: {label: "Switch", id: 'tele-all-switch',teamid: "461"} %>
+                      <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "461"} %>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                       <%= partial :name, locals: {name: "Name",teamid: "462"}%>
-                      <%= partial :counter, locals: {label: "Alliance Switch", id: 'tele-all-switch',teamid: "462"} %>
-                      <%= partial :counter, locals: {label: "Oppenent Switch", id: 'tele-opp-switch',teamid: "462"} %>
-                      <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "462"} %>
-                      <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "462"} %>
-                      <%= partial :singlechoose, locals: {datapoint: 'climb', name1: "No",name2: "Yes",name3: "Fast",teamid: "462"}%>
-                      <%= partial :choose, locals: {pgh1: "Park",pgh2: "Ground",pgh3: "Human",teamid: "462"}%>
+                      <%= partial :counter, locals: {label: "Switch", id: 'tele-all-switch',teamid: "462"} %>
+                      <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "462"} %>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                       <%= partial :name, locals: {name: "Name",teamid: "463"}%>
-                      <%= partial :counter, locals: {label: "Alliance Switch", id: 'tele-all-switch',teamid: "463"} %>
-                      <%= partial :counter, locals: {label: "Oppenent Switch", id: 'tele-opp-switch',teamid: "463"} %>
-                      <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "463"} %>
-                      <%= partial :counter, locals: {label: "Cubes", id: 'tele-cubes',teamid: "463"} %>
-                      <%= partial :singlechoose, locals: {datapoint: 'climb', name1: "No",name2: "Yes",name3: "Fast",teamid: "463"}%>
-                      <%= partial :choose, locals: {pgh1: "Park",pgh2: "Ground",pgh3: "Human",teamid: "463"}%>
+                      <%= partial :counter, locals: {label: "Switch", id: 'tele-all-switch',teamid: "463"} %>
+                      <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "463"} %>
+                    </div>
+                    <div class="col-sm-3">
+                      <%= partial :name, locals: {name: "Name",teamid: "464"}%>
+                      <%= partial :counter, locals: {label: "Intruder Switch", id: 'tele-all-switch',teamid: "464"} %>
+                      <%= partial :name, locals: {name: "Name",teamid: "465"}%>
+                      <%= partial :counter, locals: {label: "Intruder Switch", id: 'tele-all-switch',teamid: "465"} %>
+                      <%= partial :name, locals: {name: "Name",teamid: "466"}%>
+                      <%= partial :counter, locals: {label: "Intruder Switch", id: 'tele-all-switch',teamid: "466"} %>
                     </div>
                   </div>
                 </div>
@@ -329,6 +320,7 @@ function upDateteamnum(e) {
                       <p class="text-center mb-0 mt-3">Driver Skill Rating</p>
                       <%= partial :rating, locals: {teamid: "461"}%>
                       <textarea rows="5" data-teamid="461" style="width:100%"></textarea>
+                      <%= partial :singlechoose, locals: {datapoint: 'climb', name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "462"}%>
@@ -336,6 +328,7 @@ function upDateteamnum(e) {
                       <p class="text-center mb-0 mt-3">Driver Skill Rating</p>
                       <%= partial :rating, locals: {teamid: "462"}%>
                       <textarea rows="5" data-teamid="462" style="width:100%"></textarea>
+                      <%= partial :singlechoose, locals: {datapoint: 'climb', name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
                     </div>
                     <div class="col-sm-4">
                       <%= partial :name, locals: {name: "Name",teamid: "463"}%>
@@ -343,6 +336,7 @@ function upDateteamnum(e) {
                       <p class="text-center mb-0 mt-3">Driver Skill Rating</p>
                       <%= partial :rating, locals: {teamid: "463"}%>
                       <textarea rows="5" data-teamid="463" style="width:100%"></textarea>
+                      <%= partial :singlechoose, locals: {datapoint: 'climb', name1: "No",name2: "Yes",name3: "Fast",teamid: "461"}%>
                     </div>
                   </div>
                 </div>

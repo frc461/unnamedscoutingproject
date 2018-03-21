@@ -8,7 +8,7 @@ class ScoutingProject < Sinatra::Base
     set :mongo_db, db[:unnamedScoutingProject]
   end
 
-  get '/' do
+  get '/red' do
     unless data = settings.mongo_db.find({futurematch: true}).first
       settings.mongo_db.insert_one({futurematch: true, R1: '', R2: '', R3: '', B1: '', B2: '', B3: '', MN: '', EV: ''})
       data = settings.mongo_db.find({futurematch: true}).first
@@ -21,6 +21,24 @@ class ScoutingProject < Sinatra::Base
     @B1 = data['B1']
     @B2 = data['B2']
     @B3 = data['B3']
+    @color = 'red'
+    erb :index
+  end
+
+  get '/blue' do
+    unless data = settings.mongo_db.find({futurematch: true}).first
+      settings.mongo_db.insert_one({futurematch: true, R1: '', R2: '', R3: '', B1: '', B2: '', B3: '', MN: '', EV: ''})
+      data = settings.mongo_db.find({futurematch: true}).first
+    end
+    @R1 = data['R1']
+    @R2 = data['R2']
+    @R3 = data['R3']
+    @MN = data['MN']
+    @EV = data['EV']
+    @B1 = data['B1']
+    @B2 = data['B2']
+    @B3 = data['B3']
+    @color = 'blue'
     erb :index
   end
 
