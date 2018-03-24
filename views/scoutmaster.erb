@@ -1,66 +1,100 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
-    <link rel="stylesheet" href="/css/global.css"</link>
-    <link rel="stylesheet" href="/css/toastr.min.css"></link>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/toastr.min.js"></script>
-    <script src="/faye/faye.js"></script>
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
+        <link rel="stylesheet" href="/css/global.css"</link>
+        <link rel="stylesheet" href="/css/toastr.min.css"></link>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/toastr.min.js"></script>
+        <script src="/faye/faye.js"></script>
 
-    <meta
-            name='viewpoint'
-            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-            />
-  </head>
-
-  <body>
-    <div class="container-fluid">
-      <form action="/scoutmaster/submit" method="POST">
-        <div class="row">
-          <div class="col-4">
-            Blue Alliance One: <input type="number" autocomplete="false" name="B1" value="<%= @B1 %>">
-          </div>
-          <div class="col-4">
-            Blue Alliance Two: <input type="number" autocomplete="false" name="B2" value="<%= @B2 %>">
-          </div>
-          <div class="col-4">
-            Blue Alliance Three: <input type="number" autocomplete="false" name="B3" value="<%= @B3 %>">
-          </div>
+        <meta
+                name='viewpoint'
+                content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+                />
+    </head>
+    <script>
+function qFunction() {
+    console.log($(indicator));
+    $('.carousel').carousel('next');
+    if ($('#indicator').hasClass('pre')) {
+        $('#indicator').removeClass('pre');
+        $('#indicator').addClass('tele');
+        $('#indicator').html('Tele');
+    } else if ($('#indicator').hasClass('tele')) {
+        $('#indicator').removeClass('tele');
+        $('#indicator').addClass('end');
+        $('#indicator').html('Endgame');
+    } else if ($('#indicator').hasClass('end')) {
+        $('#indicator').removeClass('end');
+        $('#indicator').addClass('post');
+        $('#indicator').html('Post');
+    } else if ($('#indicator').hasClass('post')) {
+        $('#indicator').removeClass('post');
+        $('#indicator').addClass('pre');
+        $('#indicator').html('Pre');
+    }
+}
+function gqFunction() {
+    $('.carousel').carousel('prev');
+    if ($('#indicator').hasClass('pre')) {
+        $('#indicator').removeClass('pre');
+        $('#indicator').addClass('post');
+        $('#indicator').html('Post');
+    } else if ($('#indicator').hasClass('tele')) {
+        $('#indicator').removeClass('tele');
+        $('#indicator').addClass('pre');
+        $('#indicator').html('Pre');
+    } else if ($('#indicator').hasClass('end')) {
+        $('#indicator').removeClass('end');
+        $('#indicator').addClass('tele');
+        $('#indicator').html('Tele');
+    } else if ($('#indicator').hasClass('post')) {
+        $('#indicator').removeClass('post');
+        $('#indicator').addClass('end');
+        $('#indicator').html('Endgame');
+    }
+}
+    </script>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div id="carouselExampleControls" style="width:100%" class="carousel slide" data-ride="carousel" data-pause="true">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="padding:10px">
+                            <div class="row">    
+                                
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="padding:10px">
+                            <div class="row">    
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="padding:10px">
+                            <div class="row">
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="padding:10px">
+                            <div class="row">    
+                            </div>
+                            <div class="row">
+                                <button type="button" onClick="submit()" class="btn btn-dark btn-lg btn-block">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-4">
-            Red Alliance One: <input type="number" autocomplete="false" name="R1" value="<%= @R1 %>">
-          </div>
-          <div class="col-4">
-            Red Alliance Two: <input type="number" autocomplete="false" name="R2" value="<%= @R2 %>">
-          </div>
-          <div class="col-4">
-            Red Alliance Three: <input type="number" autocomplete="false" name="R3" value="<%= @R3 %>">
-          </div>
+        <div class="row" style="padding:10px;padding-top:20px" id="pid">
+            <div class="col-sm-2">
+                <button type="button" onclick="gqFunction()" class="btn btn-info btn-block">Prev</button>
+            </div>
+            <div class="col-sm-8">
+                <center><span id="indicator" class="pre badge badge-primary">Pre</span></center>
+            </div>
+            <div class="col-sm-2">
+                <button type="button" onclick="qFunction()" class="btn btn-info btn-block">Next</button>
+            </div>
         </div>
-
-        <div class="row">
-          <div class="col-4">
-            Event: <input type="text" name="EV" value="<%= @EV %>">
-          </div>
-          <div class="col-4">
-            Match: <input type="text" name="MN" value="<%= @MN %>">
-          </div>
-          <div class="col-4 text-right">
-            <input type="submit" value="Submit" class="btn btn-block btn-primary">
-          </div>
-      </form>
         </div>
-        <script>
-$('input[type=number]').focus(function() {$(this).val('');});
-var faye;
-$(function() {
-  faye = new Faye.Client('/faye');
-
-  faye.subscribe('/submit', function(e) {
-    toastr.info('Submitted ' + e.teams.join(', '));
-  });
-})
-        </script>
-  </body>
+    </body>
