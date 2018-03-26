@@ -111,6 +111,15 @@ class ScoutingProject < Sinatra::Base
     redirect '/scoutmaster'
   end
 
+  get '/events.json' do
+    settings.mongo_db.find({event: {'$exists' => true}, matches: {'$exists' => true}}).to_a.to_json
+  end
+  
+  get '/events/:key.json' do
+    settings.mongo_db.find({event: params['key'], matches: {'$exists' => true}}).to_a.to_json
+  end
+
+
   get '/scheduler' do
       @events = settings.tba.events
       erb :scheduler

@@ -46,6 +46,7 @@ class TheBlueAlliance
 
   def getmatches key
     endpoint = '/event/' + key + '/matches'
-    call endpoint 
+    predata = call endpoint 
+    predata.map{|d| {'red' => d['alliances']['red']['team_keys'].map{|t| t[3,4].to_i}, 'blue' => d['alliances']['blue']['team_keys'].map{|t| t[3,4].to_i}, 'event' => key, 'match' => d['match_number'], 'comp_level' => d['comp_level']}}
   end
 end

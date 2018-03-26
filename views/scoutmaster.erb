@@ -19,17 +19,54 @@ a {
 }
     </style>
     <script>
+var matchCounter = 0;
+var matchList = [];
+
 function up() {
-    val = parseInt($('#val').html());
-    $('#val').html(val + 1);
+  matchCounter += 1;
+    $('#val').html(matchCounter);
+        updateMatchDisplay();
 }
+
 function down() {
-    val = parseInt($('#val').html());
-    $('#val').html($('#val').html() - 1);
+  matchCounter -= 1;
+    $('#val').html(matchCounter);
+        updateMatchDisplay();
 }
+
 $(function() { 
     $('.carousel').carousel('pause');
+
+    $.get('/events.json', function(d) {
+      d = JSON.parse(d);
+      d.forEach(function(e) {
+        $('#eventSelector').append('<option value="' + e.event + '">' + e.event + '</option>')
+      });
+      matchList = d[0].matches;
+        updateMatchDisplay();
+    });
+
+    $('#eventSelector').change(function() {
+      $.get('/events/' + $(this).val() + '.json', function(d) {
+        matchList = JSON.parse(d).matches;
+        matchCounter = 0;
+        updateMatchDisplay();
+      });
+    });
+
+    $('[data-action=pushMatch]').click(function() {
+      match = matchList[matchCounter];
+      $.post('/scoutmaster/submit', {R1: match.red[0], R2: match.red[1], R3: match.red[2], B1: match.blue[0], B2: match.blue[1], B3: match.blue[2], MN: match.comp_level + match.match, EV: match.event }, function() {
+        console.log('ok');
+      });
+    });
 });
+
+function updateMatchDisplay() {
+  match = matchList[matchCounter];
+  $('#matchNumber').html(match.comp_level + " " + match.match);
+}
+
 function qFunction() {
     console.log($(indicator));
     $('.carousel').carousel('next');
@@ -102,8 +139,7 @@ function gqFunction() {
                                             <div class="card text-white bg-secondary mb-3" style="width:100%;">
                                                 <h1><span style="width:100%" class="badge badge-secondary">Event Number</span></h1>
                                                 <div class="card-body">
-                                                    <select style="width:100%">
-                                                        <option value=""></option>
+                                                    <select id="eventSelector" style="width:100%">
                                                     </select>
                                                 </div>
                                             </div>
@@ -119,11 +155,16 @@ function gqFunction() {
                                                             <button class="button btn btn-light btn-lg btn-block" onClick="up()" style="background-color:white">+</button>
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            <center><span id="val">0</span></center>
+                                                          <center><div id="val">0</div><div id="matchNumber"></div></center>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <button class="button btn btn-light btn-lg btn-block" onClick="down()" style="background-color:white">-</button>
                                                         </div>
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                      <div class="col-6 offset-3">
+                                                        <button type="button" data-action="pushMatch" class="btn btn-primary btn-lg">Push Next Match</button>
+                                                      </div>
                                                     </div>
                                                 </div>
                                             </div>
