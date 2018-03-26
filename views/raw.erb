@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
+    <link rel="stylesheet" href="/css/global.css"</link>
+    <link rel="stylesheet" href="/css/toastr.min.css"></link>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="/faye/faye.js"></script>
+
+    <meta
+            name='viewpoint'
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+            />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <% @data.each do |d| %>
+          <div class="col">
+            <div class="card my-3">
+              <div class="card-body">
+                <pre><%= d.to_hash.to_yaml %></pre>
+              </div>
+              <div class="card-footer">
+                <button type="button" data-action="delete" data-id="<%= d['_id'] %>" class="btn btn-sm btn-danger">Delete Record</button>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <script>
+$(function() {
+  $('[data-action=delete]').click(function() {
+    idbutton = $(this);
+    card = $(this).parent().parent();
+    $.post('/raw/delete', {id: $(this).data('id')}, function() {
+      card.fadeOut().remove();
+    });
+  });
+      });
+    </script>
+  </body>
+</html>
