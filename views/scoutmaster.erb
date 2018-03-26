@@ -3,9 +3,9 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
         <link rel="stylesheet" href="/css/global.css"</link>
         <link rel="stylesheet" href="/css/toastr.min.css"></link>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/toastr.min.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/toastr.min.js"></script>
         <script src="/faye/faye.js"></script>
 
         <meta
@@ -13,7 +13,23 @@
                 content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
                 />
     </head>
+    <style>
+a {
+
+}
+    </style>
     <script>
+function up() {
+    val = parseInt($('#val').html());
+    $('#val').html(val + 1);
+}
+function down() {
+    val = parseInt($('#val').html());
+    $('#val').html($('#val').html() - 1);
+}
+$(function() { 
+    $('.carousel').carousel('pause');
+});
 function qFunction() {
     console.log($(indicator));
     $('.carousel').carousel('next');
@@ -63,11 +79,87 @@ function gqFunction() {
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="padding:10px">
                             <div class="row">    
-                                
+                                <div class="col-sm-4 a">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h1><span data-teamid="461" style="width:100%" class="badge badge-secondary">461</span></h1>
+                                        </div>
+                                    </div>    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h1><span data-teamid="462" style="width:100%" class="badge badge-secondary">462</span></h1>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h1><span data-teamid="463" style="width:100%" class="badge badge-secondary">463</span></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 a">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card text-white bg-secondary mb-3" style="width:100%;">
+                                                <h1><span style="width:100%" class="badge badge-secondary">Event Number</span></h1>
+                                                <div class="card-body">
+                                                    <select style="width:100%">
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card text-white bg-secondary mb-3" style="width: 100%;">
+                                                <h1><span style="width:100%" class="badge badge-secondary">Match</span></h1>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <button class="button btn btn-light btn-lg btn-block" onClick="up()" style="background-color:white">+</button>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <center><span id="val">0</span></center>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <button class="button btn btn-light btn-lg btn-block" onClick="down()" style="background-color:white">-</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 a">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h1><span data-teamid="464" style="width:100%" class="badge badge-secondary">464</span></h1>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h1><span data-teamid="465" style="width:100%" class="badge badge-secondary">465</span></h1>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h1><span data-teamid="466" style="width:100%" class="badge badge-secondary">466</span></h1>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">    
+                                <div class="col-sm-6">
+                                    <div class="card text-white bg-secondary mb-3" style="width:100%;">
+                                        <h1><span style="width:100%" class="badge badge-secondary">461</span></h1>
+                                        <div class="card-body">
+                                            
+                                            <%= partial :button, locals: {name: "Cross",teamid: "461"}%>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="carousel-item" style="padding:10px">
@@ -84,6 +176,7 @@ function gqFunction() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <div class="row" style="padding:10px;padding-top:20px" id="pid">
             <div class="col-sm-2">
