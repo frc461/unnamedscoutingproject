@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"</link>
+    <link rel="stylesheet" href="/css/global.css"</link>
+    <link rel="stylesheet" href="/css/toastr.min.css"></link>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="/faye/faye.js"></script>
+
+    <meta
+            name='viewpoint'
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+            />
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row my-5">
+        <div class="col-6">
+
+          <select id="event" class="form-control">
+            <% @events.each do |e| %>
+              <option value="<%= e['key'] %>"><%= e['name'] %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-block btn-primary" data-action="get-matches">Get Matches</button>
+        </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-block btn-success" disabled data-action="save-matches">Save Matches</button>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-3">
+          <div id="match-counter">0 Matches Found</div>
+        </div>
+        <div class="col-9">
+          <ul id="matches">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+var eventData;
+$(function() {
+  $('[data-action=save-matches]').click(function() {
+    $.post('/scheduler/' + $('#event').val(), function(d) {
+      alert("OK");
+    });
+  });
+  $('[data-action=get-matches]').click(function() {
+    $.get('/scheduler/' + $('#event').val(), function(d) {
+      eventData = JSON.parse(d);
+      $('#matches').html('');
+      $('#match-counter').html(eventData.length + ' matches found');
+      if(eventData.length > 0) {
+        $('[data-action=save-matches]').attr('disabled', false);
+      eventData.forEach(function(m) {
+        $('#matches').append('<li>' + m.comp_level + ' ' + m.match_number + ' R[' + m.red.join(', ') + '] B[' + m.blue.join(', ') + ']</li>');
+      });
+      }else{
+        $('[data-action=save-matches]').attr('disabled', true);
+      }
+    })
+  });
+});
+    </script>
+  </body>
+</html>
