@@ -29,7 +29,39 @@ function down() {
 }
 $(function() { 
     $('.carousel').carousel('pause');
+    $('button[data-ctr-action]').click(function() {
+        id = $(this).data('ctr-id');
+        teamid = $(this).data('teamid');
+        console.log(id);
+        val = parseInt($('[data-teamid=' + teamid + '][data-ctr-value=' + id + ']').html());
+        console.log(val);
+        if($(this).data('ctr-action') == '+') {
+            val += 1;
+        }else{
+            val -= 1;
+        }
+        $('[data-teamid=' + teamid + '][data-ctr-value=' + id + ']').html(val);
+
+    });
+    $('button[data-btn-action]').click(function() {
+        console.log($(this));
+        if($(this).hasClass('btn-success')) {
+            $(this).removeClass('btn-success');
+            $(this).addClass('btn-light');
+        } else { 
+            $(this).addClass('btn-success');
+            $(this).removeClass('btn-light');
+        }
+    });
+
 });
+function fail(e) {
+    if($(e).hasClass('btn-dark')){
+        $(e).removeClass('btn-dark').addClass('btn-danger');
+    }else{
+        $(e).removeClass('btn-danger').addClass('btn-dark');
+    }
+}
 function qFunction() {
     console.log($(indicator));
     $('.carousel').carousel('next');
@@ -152,31 +184,75 @@ function gqFunction() {
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">    
                                 <div class="col-sm-6">
-                                    <div class="card text-white bg-secondary mb-3" style="width:100%;">
-                                        <h1><span style="width:100%" class="badge badge-secondary">461</span></h1>
-                                        <div class="card-body">
-                                            
-                                            <%= partial :button, locals: {name: "Cross",teamid: "461"}%>
-                                        </div>
-                                    </div>
+                                    <h4 style="width:100%;text-align:center">461</h4>
+                                    <%= partial :counter, locals: {label: "Scale", id: 'tele-scale', teamid: "461"} %>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul', teamid: "461"} %>
+                                    <h4 style="width:100%;text-align:center">462</h4>
+                                    <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "462"} %>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul', teamid: "462"} %>
+                                    <h4 style="width:100%;text-align:center">463</h4>
+                                    <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "463"} %>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul', teamid: "463"} %>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 style="width:100%;text-align:center">464</h4>
+                                    <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "464"} %>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "464"}%>
+                                    <h4 style="width:100%;text-align:center">465</h4>
+                                    <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "465"} %>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "465"}%>
+                                    <h4 style="width:100%;text-align:center">466</h4>
+                                    <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "466"} %>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "466"}%>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">
+                                <div class="col-sm-6">
+                                    <h4 style="width:100%;text-align:center">461</h4>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "461"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">462</h4>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "462"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">463</h4>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "463"}%>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 style="width:100%;text-align:center">464</h4>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "464"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">465</h4>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "465"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">466</h4>
+                                    <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "466"}%>
+                                </div>
                             </div>
                         </div>
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">    
+                                <div class="col-sm-6">
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">461</h4>
+                                    <%= partial :button1, locals: {name: "Foul", teamid: "461"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">462</h4>
+                                    <%= partial :button1, locals: {name: "Foul", teamid: "462"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">463</h4>
+                                    <%= partial :button1, locals: {name: "Foul", teamid: "463"}%>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">464</h4>
+                                    <%= partial :button1, locals: {name: "Foul", teamid: "464"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">465</h4>
+                                    <%= partial :button1, locals: {name: "Foul", teamid: "465"}%>
+                                    <h4 style="margin-top:20px;width:100%;text-align:center">466</h4>
+                                    <%= partial :button1, locals: {name: "Foul", teamid: "466"}%>
+                                </div>
                             </div>
                             <div class="row">
-                                <button type="button" onClick="submit()" class="btn btn-dark btn-lg btn-block">Submit</button>
+                                <button type="button" onClick="submit()" style="margin-top:40px" class="btn btn-dark btn-lg btn-block">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <div class="row" style="padding:10px;padding-top:20px" id="pid">
             <div class="col-sm-2">
