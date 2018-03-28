@@ -24,13 +24,11 @@ var matchList = [];
 
 function up() {
   matchCounter += 1;
-    $('#val').html(matchCounter);
         updateMatchDisplay();
 }
 
 function down() {
   matchCounter -= 1;
-    $('#val').html(matchCounter);
         updateMatchDisplay();
 }
 
@@ -83,9 +81,27 @@ $(function() {
     $('[data-action=pushMatch]').click(function() {
       match = matchList[matchCounter];
       $.post('/scoutmaster/submit', {R1: match.red[0], R2: match.red[1], R3: match.red[2], B1: match.blue[0], B2: match.blue[1], B3: match.blue[2], MN: match.comp_level + match.match, EV: match.event }, function() {
-        console.log('ok');
+        location.reload();
       });
     });
+
+    $.get('/future', function(d) {
+        data = JSON.parse(d);
+            $('[data-team-field=1]').val(data.R1);
+            $('[data-team-field=2]').val(data.R2);
+            $('[data-team-field=3]').val(data.R3);
+            $('[data-team-field=4]').val(data.B1);
+            $('[data-team-field=5]').val(data.B2);
+            $('[data-team-field=6]').val(data.B3);
+
+        $('#matchNumber').val(data.MN);
+        $('#eventID').val(data.EV);
+
+        updateTeamNums();
+
+    });
+
+
 });
 
 function fail(e) {
@@ -99,6 +115,8 @@ function fail(e) {
 function updateMatchDisplay() {
   match = matchList[matchCounter];
   $('#matchNumber').html(match.comp_level + " " + match.match);
+  $('#redTeamList').html(match.red.map(function(e) {return "<div>" + e + "</div>"}))
+  $('#blueTeamList').html(match.blue.map(function(e) {return "<div>" + e + "</div>"}))
 }
 
 function qFunction() {
@@ -142,6 +160,16 @@ function gqFunction() {
         $('#indicator').html('Endgame');
     }
 }
+
+function updateTeamNums() {
+  for(i=1;i<=6;i++) {
+    ele = $('input[type=text][data-team-field=' + i + ']');
+    v = ele.val();
+    c = ele.data('teamid');
+    $('span.badge[data-teamid='+c+']').html(v);
+    $('h4[data-teamid='+c+']').html(v);
+  }
+}
     </script>
     <body>
         <div class="container-fluid">
@@ -154,24 +182,32 @@ function gqFunction() {
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h1><span data-teamid="461" style="width:100%" class="badge badge-secondary">461</span></h1>
+                                            <input type="text" data-teamid="461" value="461" data-team-field="1"></input>
                                         </div>
                                     </div>    
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h1><span data-teamid="462" style="width:100%" class="badge badge-secondary">462</span></h1>
+                                            <input type="text" data-teamid="462" value="462" data-team-field="2"></input>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h1><span data-teamid="463" style="width:100%" class="badge badge-secondary">463</span></h1>
+                                            <input type="text" data-teamid="463" value="463" data-team-field="3"></input>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-sm-4 offset-sm-4">
+                                        <button type="button" class="btn btn-dark btn-lg" onClick="updateTeamNums()">Update Team Numbers</button>
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 a">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card text-white bg-secondary mb-3" style="width:100%;">
-                                                <h1><span style="width:100%" class="badge badge-secondary">Event Number</span></h1>
+                                                <h1><span style="width:100%" class="badge badge-secondary">Event ID</span></h1>
                                                 <div class="card-body">
                                                     <select id="eventSelector" style="width:100%">
                                                     </select>
@@ -186,18 +222,28 @@ function gqFunction() {
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-3">
-                                                            <button class="button btn btn-light btn-lg btn-block" onClick="up()" style="background-color:white">+</button>
+                                                            <button class="button btn btn-light btn-lg btn-block" onClick="down()" style="background-color:white">-</button>
                                                         </div>
                                                         <div class="col-sm-6">
-                                                          <center><div id="val">0</div><div id="matchNumber"></div></center>
+                                                          <center><div id="matchNumber"></div></center>
                                                         </div>
                                                         <div class="col-sm-3">
-                                                            <button class="button btn btn-light btn-lg btn-block" onClick="down()" style="background-color:white">-</button>
+                                                            <button class="button btn btn-light btn-lg btn-block" onClick="up()" style="background-color:white">+</button>
                                                         </div>
                                                     </div>
                                                     <div class="row mt-3">
+                                                      <div class="col-sm-4 offset-sm-2" style="background-color: #f44;">
+                                                        <div id="redTeamList">
+                                                        </div>
+                                                      </div>
+                                                      <div class="col-sm-4" style="background-color: #46f;">
+                                                        <div id="blueTeamList">
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div class="row mt-3">
                                                       <div class="col-6 offset-3">
-                                                        <button type="button" data-action="pushMatch" class="btn btn-primary btn-lg">Push Next Match</button>
+                                                        <button type="button" data-action="pushMatch" class="btn btn-primary btn-lg btn-block">Push Next Match</button>
                                                       </div>
                                                     </div>
                                                 </div>
@@ -209,17 +255,25 @@ function gqFunction() {
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h1><span data-teamid="464" style="width:100%" class="badge badge-secondary">464</span></h1>
+                                            <input type="text" data-teamid="464" value="464" data-team-field="4"></input>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h1><span data-teamid="465" style="width:100%" class="badge badge-secondary">465</span></h1>
+                                            <input type="text" data-teamid="465" value="465" data-team-field="5"></input>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h1><span data-teamid="466" style="width:100%" class="badge badge-secondary">466</span></h1>
+                                            <input type="text" data-teamid="466" value="466" data-team-field="6"></input>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-sm-4 offset-sm-4">
+                                        <button type="button" class="btn btn-dark btn-lg" onClick="updateTeamNums()">Update Team Numbers</button>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -227,24 +281,24 @@ function gqFunction() {
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">    
                                 <div class="col-sm-6">
-                                    <h4 style="width:100%;text-align:center">461</h4>
+                                    <h4 data-teamid="461" style="width:100%;text-align:center">461</h4>
                                     <%= partial :counter, locals: {label: "Scale", id: 'tele-scale', teamid: "461"} %>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul', teamid: "461"} %>
-                                    <h4 style="width:100%;text-align:center">462</h4>
+                                    <h4 data-teamid="462" style="width:100%;text-align:center">462</h4>
                                     <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "462"} %>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul', teamid: "462"} %>
-                                    <h4 style="width:100%;text-align:center">463</h4>
+                                    <h4 data-teamid="463"style="width:100%;text-align:center">463</h4>
                                     <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "463"} %>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul', teamid: "463"} %>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h4 style="width:100%;text-align:center">464</h4>
+                                    <h4 data-teamid="464" style="width:100%;text-align:center">464</h4>
                                     <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "464"} %>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "464"}%>
-                                    <h4 style="width:100%;text-align:center">465</h4>
+                                    <h4 data-teamid="465" style="width:100%;text-align:center">465</h4>
                                     <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "465"} %>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "465"}%>
-                                    <h4 style="width:100%;text-align:center">466</h4>
+                                    <h4 data-teamid="466" style="width:100%;text-align:center">466</h4>
                                     <%= partial :counter, locals: {label: "Scale", id: 'tele-scale',teamid: "466"} %>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "466"}%>
                                 </div>
@@ -253,19 +307,19 @@ function gqFunction() {
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h4 style="width:100%;text-align:center">461</h4>
+                                    <h4 data-teamid="461" style="width:100%;text-align:center">461</h4>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "461"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">462</h4>
+                                    <h4 data-teamid="462"style="margin-top:20px;width:100%;text-align:center">462</h4>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "462"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">463</h4>
+                                    <h4 data-teamid="463" style="margin-top:20px;width:100%;text-align:center">463</h4>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "463"}%>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h4 style="width:100%;text-align:center">464</h4>
+                                    <h4 data-teamid="464" style="width:100%;text-align:center">464</h4>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "464"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">465</h4>
+                                    <h4 data-teamid="465" style="margin-top:20px;width:100%;text-align:center">465</h4>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "465"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">466</h4>
+                                    <h4 data-teamid="466" style="margin-top:20px;width:100%;text-align:center">466</h4>
                                     <%= partial :button2, locals: {label: "Foul", id: 'foul',teamid: "466"}%>
                                 </div>
                             </div>
@@ -273,19 +327,19 @@ function gqFunction() {
                         <div class="carousel-item" style="padding:10px">
                             <div class="row">    
                                 <div class="col-sm-6">
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">461</h4>
+                                    <h4 data-teamid="461" style="margin-top:20px;width:100%;text-align:center">461</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "461"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">462</h4>
+                                    <h4 data-teamid="462" style="margin-top:20px;width:100%;text-align:center">462</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "462"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">463</h4>
+                                    <h4 data-teamid="463" style="margin-top:20px;width:100%;text-align:center">463</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "463"}%>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">464</h4>
+                                    <h4 data-teamid="464" style="margin-top:20px;width:100%;text-align:center">464</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "464"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">465</h4>
+                                    <h4 data-teamid="465" style="margin-top:20px;width:100%;text-align:center">465</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "465"}%>
-                                    <h4 style="margin-top:20px;width:100%;text-align:center">466</h4>
+                                    <h4 data-teamid="466" style="margin-top:20px;width:100%;text-align:center">466</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "466"}%>
                                 </div>
                             </div>
