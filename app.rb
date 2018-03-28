@@ -11,6 +11,9 @@ class ScoutingProject < Sinatra::Base
     set :mongo_db, db[:unnamedScoutingProject]
     set :tba, TheBlueAlliance.new
   end
+  get '/' do
+      erb :home
+  end
 
   get '/red' do
     unless data = settings.mongo_db.find({futurematch: true}).first
