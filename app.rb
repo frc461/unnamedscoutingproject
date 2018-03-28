@@ -116,7 +116,7 @@ class ScoutingProject < Sinatra::Base
   end
   
   get '/events/:key.json' do
-    settings.mongo_db.find({event: params['key'], matches: {'$exists' => true}}).to_a.to_json
+    settings.mongo_db.find({event: params['key'], matches: {'$exists' => true}}).to_a[0].to_json
   end
 
 

@@ -97,7 +97,22 @@ $(function() {
         $('#matchNumber').val(data.MN);
         $('#eventID').val(data.EV);
 
-        updateTeamNums();
+        $('#eventSelector').val(data.EV);
+        $.get('/events/' + data.EV + '.json', function(d) {
+          matchList = JSON.parse(d).matches;
+
+          $.each(matchList, function(i, e) {
+            if(e.comp_level + e.match == data.MN) {
+              console.log("FOUND " + data.MN);
+              matchCounter = i;
+              console.log(i);
+            }
+          });
+
+          updateMatchDisplay();
+          updateTeamNums();
+        });
+
 
     });
 
