@@ -133,6 +133,53 @@ function updateMatchDisplay() {
   $('#redTeamList').html(match.red.map(function(e) {return "<div>" + e + "</div>"}))
   $('#blueTeamList').html(match.blue.map(function(e) {return "<div>" + e + "</div>"}))
 }
+function submit() {
+    parts = [];
+    teamnos = [];
+    $('input[type=text][data-teamid]').toArray().map(function(e) {return $(e).data('teamid')}).forEach(function(teamNumber) {
+        teamnos.push("" + $('.badge[data-teamid=' + teamNumber + ']').html());
+        payload = {};
+        payload['team'] = "" + $('.badge[data-teamid=' + teamNumber + ']').html();
+        payload['match'] = $('#matchNumber').val();
+        set = $('[data-teamid=' + teamNumber + ']').filter(function(i, e) {
+            e = $(e);
+            if(e.val() == teamNumber) { return false; }
+            if(e.html() == "+" || e.html() == "-") { return false; }
+            if(e.hasClass('badge')) { return false; }
+            if(e.hasClass('btn-info')) {return false;}
+            return true;
+        });
+
+        counters = set.filter('span');
+        $.each(counters, function(i, el) {
+            el = $(el);
+            payload[el.data('ctrId')] = el.html();
+        });
+
+        dps = set.filter('[data-datapoint]');
+        dpNames = dps.toArray().map(function(e) {return $(e).data('datapoint')}).filter(function(v, i, s) {return s.indexOf(v) === i});
+        dpNames.forEach(function(n) {
+            payload[n] = '-';
+        });
+        $.each(dps, function(i, el) {
+            el = $(el);
+            if(el.hasClass('btn-success')) {
+                payload[el.data('datapoint')] = el.html();
+            }
+        });
+
+        payload['fail'] = set.filter('[data-fail]').hasClass('btn-danger') ? '1' : '-';
+        payload['comment'] = set.filter('textarea').val();
+
+        parts.push(JSON.stringify(payload));
+    });
+
+    $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2]}, function(e) {
+        faye.publish('/submit', {color: color, teams: teamnos})
+            location.reload();
+    });
+
+}
 
 function qFunction() {
     console.log($(indicator));
