@@ -53,7 +53,7 @@ class ScoutingProject < Sinatra::Base
   end
 
   post "/form" do
-    3.times do |i|
+    6.times do |i|
       obj = JSON.parse(params["payload#{i+1}"])
       if obj == settings.mongo_db.find({matchnumber: obj[ 'matchnumber' ], teamid: obj[ 'teamid' ]}).first
         settings.mongo_db.find_one_and_update({matchnumber: obj[ 'matchnumber' ], teamid: obj[ 'teamid' ]}, obj)

@@ -54,11 +54,17 @@ function upDate() {
             $('[data-team-field=1]').val(data.R1);
             $('[data-team-field=2]').val(data.R2);
             $('[data-team-field=3]').val(data.R3);
+            $('[data-team-field=4]').val(data.B1);
+            $('[data-team-field=5]').val(data.B2);
+            $('[data-team-field=6]').val(data.B3);
         }
         if ("<%= @color %>" == 'blue') {
             $('[data-team-field=1]').val(data.B1);
             $('[data-team-field=2]').val(data.B2);
             $('[data-team-field=3]').val(data.B3);
+            $('[data-team-field=4]').val(data.R1);
+            $('[data-team-field=5]').val(data.R2);
+            $('[data-team-field=6]').val(data.R3);
         }    
 
         $('#matchNumber').val(data.MN);
@@ -67,15 +73,22 @@ function upDate() {
         $('[data-team-button=1]').click();
         $('[data-team-button=2]').click();
         $('[data-team-button=3]').click();
+        $('[data-team-button=4]').click();
+        $('[data-team-button=5]').click();
+        $('[data-team-button=6]').click();
     });
 }
+var parts=[];
+var teamnos=[];
 function submit() {
     parts = [];
     teamnos = [];
     $('input[type=text][data-teamid]').toArray().map(function(e) {return $(e).data('teamid')}).forEach(function(teamNumber) {
+        console.log(teamNumber);
         teamnos.push("" + $('.badge[data-teamid=' + teamNumber + ']').html());
         payload = {};
         payload['team'] = "" + $('.badge[data-teamid=' + teamNumber + ']').html();
+        console.log($('.badge[data-teamid=' + teamNumber + ']').html());
         payload['match'] = $('#matchNumber').val();
         set = $('[data-teamid=' + teamNumber + ']').filter(function(i, e) {
             e = $(e);
@@ -110,7 +123,7 @@ function submit() {
         parts.push(JSON.stringify(payload));
     });
 
-    $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2]}, function(e) {
+    $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2], payload4: parts[3], payload5: parts[4], payload6: parts[5]}, function(e) {
         faye.publish('/submit', {color: color, teams: teamnos})
             location.reload();
     });
@@ -202,10 +215,14 @@ function upDateteamnum(e) {
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "461"}%>
+                                            <div>
                                             <input type="text" data-teamid="461" value="461" data-team-field="1"></input>
                                             <button class="btn btn-info" data-teamid="461" onClick="upDateteamnum(this)" data-team-button="1">Update</button>
+                                            </div>
+                                            <div>
                                             <input type="text" data-teamid="464" value="464" data-team-field="4"></input>
                                             <button class="btn btn-info" data-teamid="464" onClick="upDateteamnum(this)" data-team-button="4">Update</button>
+                                            </div>
                                             <br><br>
                                             <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
                                             <div style="height:215px;width:295px;background-color:<%= @color == 'red' ? '#ff9990' : '#9990ff' %>">
@@ -213,11 +230,15 @@ function upDateteamnum(e) {
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
-                                            <%= partial :name, locals: {name: "Name",teamid: "462"}%>
+                                          <%= partial :name, locals: {name: "Name",teamid: "462"}%>
+                                          <div>
                                             <input type="text" data-teamid="462" value="462" data-team-field="2"></input>
                                             <button class="btn btn-info" data-teamid="462" onClick="upDateteamnum(this)" data-team-button="2">Update</button>
+                                          </div>
+                                          <div>
                                             <input type="text" data-teamid="465" value="465" data-team-field="5"></input>
                                             <button class="btn btn-info" data-teamid="465" onClick="upDateteamnum(this)" data-team-button="5">upDate</button>
+                                          </div>
                                             <br><br>
                                             <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
 
@@ -230,11 +251,15 @@ function upDateteamnum(e) {
                                             <br>
                                         </div>
                                         <div class="col-sm-4">
-                                            <%= partial :name, locals: {name: "Name",teamid: "463"}%>
+                                          <%= partial :name, locals: {name: "Name",teamid: "463"}%>
+                                          <div>
                                             <input type="text" data-teamid="463" value="463" data-team-field="3"></input>
                                             <button class="btn btn-info" data-teamid="463" onClick="upDateteamnum(this)" data-team-button="3">Update</button>
+                                          </div>
+                                          <div>
                                             <input type="text" data-teamid="466" value="466" data-team-field="6"></input>
                                             <button class="btn btn-info" data-teamid="466" onClick="upDateteamnum(this)" data-team-button="6">Update</button>
+                                          </div>
                                             <br><br>
                                             <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
                                             <div style="height:215px;width:295px;background-color:<%= @color == 'red' ? '#ff9990' : '#9990ff' %>">
