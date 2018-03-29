@@ -96,6 +96,7 @@ function submit() {
             if(e.html() == "+" || e.html() == "-") { return false; }
             if(e.hasClass('badge')) { return false; }
             if(e.hasClass('btn-info')) {return false;}
+            if(e.('btn-info')) {return false;}
             return true;
         });
 
@@ -117,8 +118,16 @@ function submit() {
             }
         });
 
+        if(set.filter('[datapoint-startPos]').length > 0) {
+          payload['startPosL'] = set.filter('[data-left]').hasClass('btn-success') ? 'left' : '-';
+          payload['startPosM'] = set.filter('[data-left]').hasClass('btn-success') ? 'middle' : '-';
+          payload['startPosR'] = set.filter('[data-left]').hasClass('btn-success') ? 'right' : '-';
+        }
         if(set.filter('[data-climb]').length > 0) {
           payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
+        }
+        if(set.filter('[data-cross]').length > 0) {
+            payload['auto-cross'] = set.filter('[data-cross]').hasClass('btn-success') ? '1' : '-';
         }
         if(set.filter('[data-driver-rating]').length > 0) {
           payload['driver-rating'] = set.filter('[data-driver-rating]').hasClass('btn-success') ? ':)' : ':(';
