@@ -117,7 +117,7 @@ function submit() {
             }
         });
 
-        payload['Climb'] = set.filter('[data-fail]').hasClass('btn-success') ? '1' : '-';
+        payload['climb'] = set.filter('[data-fail]').hasClass('btn-success') ? '1' : '-';
         payload['comment'] = set.filter('textarea').val();
 
         parts.push(JSON.stringify(payload));
@@ -339,15 +339,15 @@ function upDateteamnum(e) {
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "461"}%>
-                                        <%= partial :button, locals: {name: "Climb",teamid: "461"}%>
+                                        <%= partial :climb, locals: {name: "Climb",teamid: "461"}%>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "462"}%>
-                                        <%= partial :button, locals: {name: "Climb",teamid: "462"}%>
+                                        <%= partial :climb, locals: {name: "Climb",teamid: "462"}%>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "463"}%>
-                                        <%= partial :button, locals: {name: "Climb",teamid: "463"}%>
+                                        <%= partial :climb, locals: {name: "Climb",teamid: "463"}%>
                                     </div>
                                 </div>
                             </div>
