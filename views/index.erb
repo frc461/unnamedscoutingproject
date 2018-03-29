@@ -117,7 +117,7 @@ function submit() {
             }
         });
 
-        payload['fail'] = set.filter('[data-fail]').hasClass('btn-danger') ? '1' : '-';
+        payload['Climb'] = set.filter('[data-fail]').hasClass('btn-danger') ? '1' : '-';
         payload['comment'] = set.filter('textarea').val();
 
         parts.push(JSON.stringify(payload));
