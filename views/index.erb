@@ -117,7 +117,12 @@ function submit() {
             }
         });
 
-        payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
+        if(set.filter('[data-climb]').length > 0) {
+          payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
+        }
+        if(set.filter('[data-driver-rating]').length > 0) {
+          payload['driver-rating'] = set.filter('[data-driver-rating]').hasClass('btn-success') ? ':)' : ':(';
+        }
         payload['comment'] = set.filter('textarea').val();
 
         parts.push(JSON.stringify(payload));
@@ -362,10 +367,10 @@ function upDateteamnum(e) {
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <center><%= partial :button, locals: {name: ":)",teamid: "461"}%></center>
+                                                <center><%= partial :rating, locals: {name: ":)",teamid: "461"}%></center>
                                             </div>
                                             <div class="col-sm-6">
-                                                <center><%= partial :button, locals: {name: ":(",teamid: "461"}%></center>
+                                                <center><%= partial :rating1, locals: {name: ":(",teamid: "461"}%></center>
                                             </div>
                                         </div>
                                     </div>
@@ -374,10 +379,10 @@ function upDateteamnum(e) {
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <center><%= partial :button, locals: {name: ":)",teamid: "462"}%></center>
+                                                <center><%= partial :rating, locals: {name: ":)",teamid: "462"}%></center>
                                             </div>
                                             <div class="col-sm-6">
-                                                <center><%= partial :button, locals: {name: ":(",teamid: "462"}%></center>
+                                                <center><%= partial :rating1, locals: {name: ":(",teamid: "462"}%></center>
                                             </div>
                                         </div>
                                     </div>
@@ -386,10 +391,10 @@ function upDateteamnum(e) {
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <center><%= partial :button, locals: {name: ":)",teamid: "463"}%></center>
+                                                <center><%= partial :rating, locals: {name: ":)",teamid: "463"}%></center>
                                             </div>
                                             <div class="col-sm-6">
-                                                <center><%= partial :button, locals: {name: ":(",teamid: "463"}%></center>
+                                                <center><%= partial :rating1, locals: {name: ":(",teamid: "463"}%></center>
                                             </div>
                                         </div>
                                     </div>

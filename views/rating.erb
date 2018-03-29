@@ -1,19 +1,6 @@
-<table class="table">
-    <tr>
-        <td>
-            <button type="button" data-datapoint="driverRating" data-btn-action="" style="margin:1px;padding:0px"  data-teamid="<%= teamid %>" onClick="getmn(this)" class="btn btn-light btn-lg btn-block rate">1</button>
-        </td>
-        <td>
-            <button type="button" data-datapoint="driverRating" data-btn-action="" style="margin:1px;padding:0px" data-teamid="<%= teamid %>" onClick="getmn(this)" class="btn btn-light btn-lg btn-block rate">2</button>
-        </td>
-        <td>
-            <button type="button" data-datapoint="driverRating" data-btn-action="" style="margin:1px;padding:0px" data-teamid="<%= teamid %>" onClick="getmn(this)" class="btn btn-light btn-lg btn-block rate">3</button>
-        </td>
-        <td>
-            <button type="button" data-datapoint="driverRating" data-btn-action="" style="margin:1px;padding:0px" data-teamid="<%= teamid %>" onClick="getmn(this)" class="btn btn-light btn-lg btn-block rate">4</button>
-        </td>
-        <td>
-            <button type="button" data-datapoint="driverRating" data-btn-action="" style="margin:1px;padding:0px" data-teamid="<%= teamid %>" onClick="getmn(this)" class="btn btn-light btn-lg btn-block rate">5</button>
-        </td>
-    </tr>
-</table>
+<div class="row">
+    <div class="col-sm-12">
+      <button type="button" data-teamid="<%= teamid %>" data-btn-action="" data-driver-rating class="btn btn-light btn-lg btn-block"><%= name %></button>
+        <p id="<%= name %>"></p>
+    </div>
+</div>
