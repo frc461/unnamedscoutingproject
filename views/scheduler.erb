@@ -59,7 +59,7 @@ $(function() {
       if(eventData.length > 0) {
         $('[data-action=save-matches]').attr('disabled', false);
       eventData.forEach(function(m) {
-        $('#matches').append('<li>' + m.comp_level + ' ' + m.match_number + ' R[' + m.red.join(', ') + '] B[' + m.blue.join(', ') + ']</li>');
+        $('#matches').append('<li>' + m.comp_level + ' ' + m.match + ' R[' + m.red.join(', ') + '] B[' + m.blue.join(', ') + ']</li>');
       });
       }else{
         $('[data-action=save-matches]').attr('disabled', true);

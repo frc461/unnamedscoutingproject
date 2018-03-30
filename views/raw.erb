@@ -31,8 +31,15 @@
         <% end %>
       </div>
     </div>
+                <button type="button" data-action="delete-all" class="btn btn-sm btn-danger">Delete All Records</button>
     <script>
 $(function() {
+$('[data-action=delete-all]').click(function() {
+  $.post('/raw/clear', function() {
+    window.location.reload()
+    });
+  });
+
   $('[data-action=delete]').click(function() {
     idbutton = $(this);
     card = $(this).parent().parent();

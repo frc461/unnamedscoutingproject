@@ -58,16 +58,17 @@ class ScoutingProject < Sinatra::Base
   post "/form" do
     6.times do |i|
       obj = JSON.parse(params["payload#{i+1}"])
-      if obj == settings.mongo_db.find({matchnumber: obj[ 'matchnumber' ], teamid: obj[ 'teamid' ]}).first
-        settings.mongo_db.find_one_and_update({matchnumber: obj[ 'matchnumber' ], teamid: obj[ 'teamid' ]}, obj)
+      if settings.mongo_db.find({match: obj[ 'match' ], team: obj[ 'team' ]}).first
+        settings.mongo_db.find_one_and_update({match: obj[ 'match' ], team: obj[ 'team' ]}, {'$set' => obj})
       else
         settings.mongo_db.insert_one(obj)
       end
     end
+    "OK"
   end
 
   get '/all' do
-    @data = settings.mongo_db.find
+    @data = settings.mongo_db.find(team: {'$exists' => true}, match: {'$exists' => true})
     erb :raw
   end
 
@@ -82,6 +83,11 @@ class ScoutingProject < Sinatra::Base
 
   post '/raw/delete' do
     settings.mongo_db.delete_one({'_id' => BSON::ObjectId(params['id'])}).deleted_count.to_s
+  end
+
+
+  post '/raw/clear' do
+    settings.mongo_db.delete_many({'team' => {'$exists' => true}, 'match' => {'$exists' => true}}).deleted_count.to_s
   end
 
   get '/raw/:team' do

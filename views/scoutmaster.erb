@@ -174,7 +174,7 @@ function submit() {
         parts.push(JSON.stringify(payload));
     });
 
-    $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2]}, function(e) {
+    $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2], payload4: parts[3], payload5: parts[4], payload6: parts[5]}, function(e) {
         faye.publish('/submit', {color: color, teams: teamnos})
             location.reload();
     });
@@ -236,7 +236,7 @@ function updateTeamNums() {
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div id="carouselExampleControls" style="width:100%" class="carousel slide" data-ride="carousel" data-pause="true">
+                <div id="carouselExampleControls" style="width:100%" class="carousel slide" data-ride="false" data-pause="true">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="padding:10px">
                             <div class="row">    
