@@ -96,7 +96,6 @@ function submit() {
             if(e.html() == "+" || e.html() == "-") { return false; }
             if(e.hasClass('badge')) { return false; }
             if(e.hasClass('btn-info')) {return false;}
-            if(e.('btn-info')) {return false;}
             return true;
         });
 
@@ -118,10 +117,14 @@ function submit() {
             }
         });
 
-        if(set.filter('[datapoint-startPos]').length > 0) {
-          payload['startPosL'] = set.filter('[data-left]').hasClass('btn-success') ? 'left' : '-';
-          payload['startPosM'] = set.filter('[data-left]').hasClass('btn-success') ? 'middle' : '-';
-          payload['startPosR'] = set.filter('[data-left]').hasClass('btn-success') ? 'right' : '-';
+        if(set.filter('[data-left]').length > 0) {
+          payload['startPosL'] = set.filter('[data-left]').hasClass('btn-success') ? 'left' : 'no';
+        }
+        if(set.filter('[data-left]').length > 0) {
+          payload['startPosM'] = set.filter('[data-middle]').hasClass('btn-success') ? 'middle' : 'no';
+        }
+        if(set.filter('[data-left]').length > 0) {
+          payload['startPosR'] = set.filter('[data-right]').hasClass('btn-success') ? 'right' : 'no';
         }
         if(set.filter('[data-climb]').length > 0) {
           payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
