@@ -117,11 +117,23 @@ function submit() {
             }
         });
 
+        if(set.filter('[data-left]').length > 0) {
+          payload['startPosL'] = set.filter('[data-left]').hasClass('btn-success') ? 'left' : 'no';
+        }
+        if(set.filter('[data-left]').length > 0) {
+          payload['startPosM'] = set.filter('[data-middle]').hasClass('btn-success') ? 'middle' : 'no';
+        }
+        if(set.filter('[data-left]').length > 0) {
+          payload['startPosR'] = set.filter('[data-right]').hasClass('btn-success') ? 'right' : 'no';
+        }
         if(set.filter('[data-climb]').length > 0) {
           payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
         }
         if(set.filter('[data-startleft]').length > 0 || set.filter('[data-startmiddle]').length > 0 || set.filter('[data-startright]').length > 0) {
           payload['startPos'] = set.filter('[data-startleft]').hasClass('btn-success') ? 'L' : (set.filter('[data-startright]').hasClass('btn-success') ? 'R' : 'M');
+        }
+        if(set.filter('[data-cross]').length > 0) {
+            payload['auto-cross'] = set.filter('[data-cross]').hasClass('btn-success') ? '1' : '-';
         }
         if(set.filter('[data-driver-rating]').length > 0) {
           payload['driver-rating'] = set.filter('[data-driver-rating]').hasClass('btn-success') ? ':)' : ':(';
