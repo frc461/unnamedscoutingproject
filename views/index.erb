@@ -52,7 +52,6 @@ $(function() {
     $('.carousel').carousel('pause');
     document.addEventListener('keypress', (event) => {
       const keyName = event.key;
-      alert(keyName);
       yis = 0;
       if (yis == '0' && keyName == 'w') {
         yis += 1;
@@ -362,16 +361,19 @@ function upDateteamnum(e) {
                                             <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "461"} %>
-                                        </div>
+                                            <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "461"}%>
+                                        </div> 
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "462"} %>
+                                            <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "463"} %>
+                                            <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "463"}%>
                                         </div>
                                     </div>
                                     <div class="row" style="background-color: #0e110f;color:white">
@@ -426,6 +428,9 @@ function upDateteamnum(e) {
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "461"}%></center>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
