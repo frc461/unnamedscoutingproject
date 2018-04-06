@@ -14,7 +14,10 @@ class ScoutingProject < Sinatra::Base
   get '/' do
       erb :home
   end
-
+  
+  get '/ynot' do
+      erb :ynot
+  end
   get '/red' do
     unless data = settings.mongo_db.find({futurematch: true}).first
       settings.mongo_db.insert_one({futurematch: true, R1: '', R2: '', R3: '', B1: '', B2: '', B3: '', MN: '', EV: ''})
