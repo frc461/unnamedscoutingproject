@@ -14,7 +14,25 @@ class ScoutingProject < Sinatra::Base
   get '/' do
       erb :home
   end
-  
+  get '/trend' do
+      settings.mongo_db.find(team: {'$exists' => true}, match: {'$exists' => true}).map{|e| e}.to_json
+      erb :trending
+  end
+  get '/export' do
+      drive = 'lsblk'.match(/ ─(sd\w\d) /)[1]
+      `mkdir ~/export`
+      `mount /dev/#{drive} ~/export`
+      File.open('~/export/stuff.json', 'w' ) do |f|
+          f << "Stuff!"
+      end
+      `sync`
+      `umount ~/export`
+
+      erb :compress
+  end
+  get '/compress' do
+      erb :compress
+  end
   get '/ynot' do
       erb :ynot
   end

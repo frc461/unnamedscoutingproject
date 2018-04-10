@@ -4,23 +4,48 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="/css/toastr.min.css"></link>
         <link rel="stylesheet" href="/css/global.css"></link>
+        <script src="js/bootstrap.min.js"></script>
         <title>3%6280.>2!198#1@</title>
-        <script>
-$('.alert').alert();
-        </script>
-    </head> 
+    </head>
+<style>
+.button {
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    color: black;
+    border: none;
+}
+</style>
+<script>
+function trend() {
+    window.location = "/trend";
+}
+function compress() {
+    window.location = "/compress";
+}
+function home() {
+    window.location = "/";
+}
+</script>
     <body>
         <div class="container-fluid" style="margin:0;padding:0">
             <div class="row" style="background-color:#0d264f;height:100VH;min-width:100%">
                 <div class="col-sm-12">
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <div class="row" style="padding: 8VH;">
+                        <button class="button" onClick="trend()">Trend Data</button>
+                    </div>
+                    <div class="row" style="padding: 8VH;">
+                        <button class="button" onClick="home()">Home</button>
+                    </div>
+                    <div class="row" style="padding: 8VH;">
+                        <button class="button" onClick="compress()">Compress</button>
                     </div>
                 </div>
             </div>
         </div>
     </body>
 </html>
+:q
