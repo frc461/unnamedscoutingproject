@@ -13,9 +13,15 @@
                 name='viewport' 
                 content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
                 />
+<style>
+.carousel-item {
+height: 500px;
+}
+</style>
         <script>
 var faye;
 var color;
+var yis;
 $(function() {
     upDate();
     faye = new Faye.Client('/faye');
@@ -44,8 +50,37 @@ $(function() {
         }
     });
     $('.carousel').carousel('pause');
+    document.addEventListener('keypress', (event) => {
+      const keyName = event.key;
+      alert(keyName);
+      yis = 0;
+      if (yis == '0' && keyName == 'w') {
+        yis += 1;
+        console.log(yis)
+      } if (keyName == 'w' && yis =='1') {
+        yis += 1;
+        console.log(yis)
+      } if (yis == '2') {
+        yis += 1;
+        console.log(yis)
+      } if (yis == '3') {
+        yis += 1;
+        console.log(yis)
+      } if (yis == '4') {
+        yis += 1;
+        console.log(yis)
+      } if (yis == '5') {
+        yis += 1;
+        console.log(yis)
+      } if (yis == '6') {
+        yis += 1;
+        console.log(yis)
+      } if (yis == '7') {
+        alert('ma name jeff');
+        console.log(yis)
+      }
+    });
 });
-
 function upDate() {
     $.get('/future', function(d) {
         color = "<%= @color %>";
@@ -94,6 +129,9 @@ function submit() {
             e = $(e);
             if(e.val() == teamNumber) { return false; }
             if(e.html() == "+" || e.html() == "-") { return false; }
+            e = $(e);
+            if(e.val() == teamNumber) { return false; }
+            if(e.html() == "+" || e.html() == "-") { return false; }
             if(e.hasClass('badge')) { return false; }
             if(e.hasClass('btn-info')) {return false;}
             return true;
@@ -117,26 +155,20 @@ function submit() {
             }
         });
 
-        if(set.filter('[data-left]').length > 0) {
-          payload['startPosL'] = set.filter('[data-left]').hasClass('btn-success') ? 'left' : 'no';
-        }
-        if(set.filter('[data-left]').length > 0) {
-          payload['startPosM'] = set.filter('[data-middle]').hasClass('btn-success') ? 'middle' : 'no';
-        }
-        if(set.filter('[data-left]').length > 0) {
-          payload['startPosR'] = set.filter('[data-right]').hasClass('btn-success') ? 'right' : 'no';
-        }
-        if(set.filter('[data-climb]').length > 0) {
-          payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
-        }
-        if(set.filter('[data-startleft]').length > 0 || set.filter('[data-startmiddle]').length > 0 || set.filter('[data-startright]').length > 0) {
-          payload['startPos'] = set.filter('[data-startleft]').hasClass('btn-success') ? 'L' : (set.filter('[data-startright]').hasClass('btn-success') ? 'R' : 'M');
-        }
+        //if(set.filter('[data-climb]').length > 0) {
+        //  payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
+        //}
+        // if(set.filter('[data-startleft]').length > 0 || set.filter('[data-startmiddle]').length > 0 || set.filter('[data-startright]').length > 0) {
+        //  payload['startPos'] = set.filter('[data-startleft]').hasClass('btn-success') ? 'L' : (set.filter('[data-startright]').hasClass('btn-success') ? 'R' : 'M');
+        // }
         if(set.filter('[data-cross]').length > 0) {
             payload['auto-cross'] = set.filter('[data-cross]').hasClass('btn-success') ? '1' : '-';
         }
-        if(set.filter('[data-driver-rating]').length > 0) {
-          payload['driver-rating'] = set.filter('[data-driver-rating]').hasClass('btn-success') ? ':)' : ':(';
+        if(set.filter('[data-climb]').length > 0) {
+            payload['Climb'] = set.filter('[data-climb]').hasClass('btn-success') ? 'Climb' : (set.filter('[data-ramp]').hasClass('btn-success') ? 'Ramp' : ( set.filter('[data-rampbot]').hasClass('btn-success') ? 'Rampbot' : (set.filter('[data-climbramp]').hasClass('btn-success') ? 'both' : '-')));
+        }
+        if(set.filter('[data-driver]').length > 0) {
+          payload['driver-rating'] = set.filter('[data-driver]').hasClass('btn-success') ? ':)' : (set.filter('[data-driver1]').hasClass('btn-success') ? ':(' : 'No Ans');
         }
         payload['comment'] = set.filter('textarea').val();
 
@@ -183,7 +215,7 @@ function gqFunction() {
     } else if ($('#indicator').hasClass('auto')) {
         $('#indicator').removeClass('auto');
         $('#indicator').addClass('pre');
-        $('#indicator').html('Pre');
+       $('#indicator').html('Pre');
     } else if ($('#indicator').hasClass('tele')) {
         $('#indicator').removeClass('tele');
         $('#indicator').addClass('auto');
@@ -201,6 +233,12 @@ function gqFunction() {
 function getn(e) {
     var teamid = $(e).data('teamid');
     tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].single');
+    tmpObj.removeClass('btn-success');
+    tmpObj.addClass('btn-light');
+}
+function getmnm(e) {
+    var teamid = $(e).data('teamid');
+    tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].climb');
     tmpObj.removeClass('btn-success');
     tmpObj.addClass('btn-light');
 }
@@ -246,7 +284,7 @@ function upDateteamnum(e) {
                                             <br><br>
                                             <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
                                             <div style="height:195px;width:295px;background-color:<%= @color == 'red' ? '#ff9990' : '#9990ff' %>">
-                                                <h3 style="color:white;text-align:center;padding-top:91px;padding-bottom:91px"><%= @color == 'red' ? 'Red Alliance' : 'Blue Alliance' %></h3>
+                                              <center><h3 style="color:white;text-align:center;padding-top:91px;padding-bottom:0px"><%= @color == 'red' ? 'Red Alliance' : 'Blue Alliance' %></center><button onClick"kunami()" style="background-color:<%= @color == 'red' ? '#ff9990' : '#9990ff' %>" type="button" class="btn"></button></h3>
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -257,7 +295,7 @@ function upDateteamnum(e) {
                                           </div>
                                           <div>
                                             <input type="text" data-teamid="465" value="465" data-team-field="5" style="background-color:<%= @color != 'red' ? '#ffdddd' : '#ddddff' %>"></input>
-                                            <button class="btn btn-info" data-teamid="465" onClick="upDateteamnum(this)" data-team-button="5">upDate</button>
+                                            <button class="btn btn-info" data-teamid="465" onClick="upDateteamnum(this)" data-team-button="5">Update</button>
                                           </div>
                                             <br><br>
                                             <%= partial :singlechoose, locals: {datapoint: 'startPos', name1: "Left",name2: "Mid",name3: "Right",teamid: "461"}%>
@@ -339,15 +377,15 @@ function upDateteamnum(e) {
                                     <div class="row" style="background-color: #0e110f;color:white">
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "464"}%>
-                                            <%= partial :counter, locals: {label: "Offensive", id: 'tele-all-switch',teamid: "464"} %>
+                                            <%= partial :counter, locals: {label: "Offensive", id: 'tele-opp-switch',teamid: "464"} %>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "465"}%>
-                                            <%= partial :counter, locals: {label: "Offensive", id: 'tele-all-switch',teamid: "465"} %>
+                                            <%= partial :counter, locals: {label: "Offensive", id: 'tele-opp-switch',teamid: "465"} %>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "466"}%>
-                                            <%= partial :counter, locals: {label: "Offensive", id: 'tele-all-switch',teamid: "466"} %>
+                                            <%= partial :counter, locals: {label: "Offensive", id: 'tele-opp-switch',teamid: "466"} %>
                                         </div>
                                     </div>
                                 </div>
@@ -359,15 +397,15 @@ function upDateteamnum(e) {
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "461"}%>
-                                        <%= partial :climb, locals: {name: "Climb",teamid: "461"}%>
+                                        <%= partial :climb, locals: {name: "Climb", name1: "Ramp",name2: "Rampbot",name3: "Rampbot + Climb",teamid: "461"}%>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "462"}%>
-                                        <%= partial :climb, locals: {name: "Climb",teamid: "462"}%>
+                                        <%= partial :climb, locals: {name: "Climb", name1: "Ramp",name2: "Rampbot",name3: "Rampbot + Climb",teamid: "462"}%>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "463"}%>
-                                        <%= partial :climb, locals: {name: "Climb",teamid: "463"}%>
+                                        <%= partial :climb, locals: {name: "Climb", name1: "Ramp",name2: "Rampbot",name3: "Rampbot + Climb",teamid: "463"}%>
                                     </div>
                                 </div>
                             </div>
@@ -388,9 +426,6 @@ function upDateteamnum(e) {
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "461"}%></center>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">

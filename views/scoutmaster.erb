@@ -175,7 +175,6 @@ function submit() {
     });
 
     $.post('/form', {payload1: parts[0], payload2: parts[1], payload3: parts[2], payload4: parts[3], payload5: parts[4], payload6: parts[5]}, function(e) {
-        faye.publish('/submit', {color: color, teams: teamnos})
             location.reload();
     });
 
