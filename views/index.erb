@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
-        <link rel="stylesheet" href="/css/toastr.min.css"></link>
-        <link rel="stylesheet" href="/css/global.css"></link>
+        <link rel="stylesheet" href="css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="css/toastr.min.css"></link>
+        <link rel="stylesheet" href="css/global.css"></link>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/toastr.min.js"></script>
         <script src="/faye/faye.js"></script>
+        <script src="js/konami.min.js"></script>
         <meta 
                 name='viewport' 
                 content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
@@ -50,36 +51,14 @@ $(function() {
         }
     });
     $('.carousel').carousel('pause');
-    document.addEventListener('keypress', (event) => {
-      const keyName = event.key;
-      alert(keyName);
-      yis = 0;
-      if (yis == '0' && keyName == 'w') {
-        yis += 1;
-        console.log(yis)
-      } if (keyName == 'w' && yis =='1') {
-        yis += 1;
-        console.log(yis)
-      } if (yis == '2') {
-        yis += 1;
-        console.log(yis)
-      } if (yis == '3') {
-        yis += 1;
-        console.log(yis)
-      } if (yis == '4') {
-        yis += 1;
-        console.log(yis)
-      } if (yis == '5') {
-        yis += 1;
-        console.log(yis)
-      } if (yis == '6') {
-        yis += 1;
-        console.log(yis)
-      } if (yis == '7') {
-        alert('ma name jeff');
-        console.log(yis)
-      }
-    });
+    $(document).on('keyup',
+        Konami.code(function() {
+            alert('You have won, gg.');
+            setTimeout(function(){
+                window.location = "/ynot";
+            }, 250); 
+        })
+    );
 });
 function upDate() {
     $.get('/future', function(d) {
@@ -165,7 +144,14 @@ function submit() {
             payload['auto-cross'] = set.filter('[data-cross]').hasClass('btn-success') ? '1' : '-';
         }
         if(set.filter('[data-climb]').length > 0) {
-            payload['Climb'] = set.filter('[data-climb]').hasClass('btn-success') ? 'Climb' : (set.filter('[data-ramp]').hasClass('btn-success') ? 'Ramp' : ( set.filter('[data-rampbot]').hasClass('btn-success') ? 'Rampbot' : (set.filter('[data-climbramp]').hasClass('btn-success') ? 'both' : '-')));
+            payload['vault'] = set.filter('[data-vault]').attr('checked') ? 'Y' : 'n';
+            payload['switch'] = set.filter('[data-switch]').attr('checked') ? 'Y' : 'n'; 
+            payload['scale'] = set.filter('[data-scale]').attr('checked') ? 'Y' : 'n';
+            payload['oppenent switch'] = set.filter('[data-oswitch]').attr('checked') ? 'Y' : 'n'; 
+            payload['defense'] = set.filter('data-def').attr('checked') ? 'Y' : 'n';
+        }
+        if(set.filter('[data-climb]').length > 0) {
+            payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? 'Climb' : (set.filter('[data-ramp]').hasClass('btn-success') ? 'Ramp' : ( set.filter('[data-rampbot]').hasClass('btn-success') ? 'Rampbot' : (set.filter('[data-climbramp]').hasClass('btn-success') ? 'both' : '-')));
         }
         if(set.filter('[data-driver]').length > 0) {
           payload['driver-rating'] = set.filter('[data-driver]').hasClass('btn-success') ? ':)' : (set.filter('[data-driver1]').hasClass('btn-success') ? ':(' : 'No Ans');
@@ -362,16 +348,19 @@ function upDateteamnum(e) {
                                             <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "461"} %>
-                                        </div>
+                                            <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "461"}%>
+                                        </div> 
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "462"} %>
+                                            <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "463"} %>
+                                            <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "463"}%>
                                         </div>
                                     </div>
                                     <div class="row" style="background-color: #0e110f;color:white">
