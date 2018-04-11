@@ -60,7 +60,6 @@ $(function() {
         })
     );
 });
-
 function upDate() {
     $.get('/future', function(d) {
         color = "<%= @color %>";
@@ -416,9 +415,6 @@ function upDateteamnum(e) {
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "461"}%></center>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
