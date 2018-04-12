@@ -12,33 +12,49 @@ class ScoutingProject < Sinatra::Base
     set :tba, TheBlueAlliance.new
   end
   get '/' do
-      erb :home
+    erb :home
   end
   get '/trend' do
-      erb :trending
+    erb :trending
+  end
+  get '/import' do
+    drive = `lsblk`.match(/─(sd\w\d)/)
+    if drive
+      drive = drive[1]
+      `mkdir /export`
+      `mount /dev/#{drive} /export`
+      `cp /export/stuff.json ./stuff.json`
+      `sync`
+      `umount /export`
+
+      data
+    else
+      [401, "No USB Drive available: #{drive.inspect}"]
+    end
   end
   get '/export' do
-      drive = 'lsblk'.match(/ ─(sd\w\d) /)
-      if drive
-          drive = drive[1]
-      `mkdir ~/export`
-      `mount /dev/#{drive} ~/export`
-      File.open('~/export/stuff.json', 'w' ) do |f|
-          f << settings.mongo_db.find(team: {'$exists' => true}, match: {'$exists' => true}).map{|e| e}.to_json
+    drive = `lsblk`.match(/─(sd\w\d)/)
+    if drive
+      drive = drive[1]
+      `mkdir /export`
+      `mount /dev/#{drive} /export`
+      data = settings.mongo_db.find(team: {'$exists' => true}, match: {'$exists' => true}).map{|e| e}.to_json
+      File.open('/export/stuff.json', 'w+' ) do |f|
+        f.write data
       end
       `sync`
-      `umount ~/export`
+      `umount /export`
 
-      erb :compress
-      else
-          [401, "No USB Drive available"]
-      end
+      data
+    else
+      [401, "No USB Drive available: #{drive.inspect}"]
+    end
   end
   get '/compress' do
-      erb :compress
+    erb :compress
   end
   get '/ynot' do
-      erb :ynot
+    erb :ynot
   end
   get '/red' do
     unless data = settings.mongo_db.find({futurematch: true}).first
@@ -148,15 +164,15 @@ class ScoutingProject < Sinatra::Base
   get '/events.json' do
     settings.mongo_db.find({event: {'$exists' => true}, matches: {'$exists' => true}}).to_a.to_json
   end
-  
+
   get '/events/:key.json' do
     settings.mongo_db.find({event: params['key'], matches: {'$exists' => true}}).to_a[0].to_json
   end
 
 
   get '/scheduler' do
-      @events = settings.tba.events
-      erb :scheduler
+    @events = settings.tba.events
+    erb :scheduler
   end
 
   get '/scheduler/:event' do
