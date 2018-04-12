@@ -15,7 +15,11 @@ class ScoutingProject < Sinatra::Base
     erb :home
   end
   get '/trend' do
+    @matches = JSON.parse(File.read('./stuff.json'))
     erb :trending
+  end
+  get '/trend.json' do
+    File.read('./stuff.json')
   end
   get '/import' do
     drive = `lsblk`.match(/─(sd\w\d)/)
@@ -27,7 +31,7 @@ class ScoutingProject < Sinatra::Base
       `sync`
       `umount /export`
 
-      data
+      "OK"
     else
       [401, "No USB Drive available: #{drive.inspect}"]
     end
