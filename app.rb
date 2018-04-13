@@ -38,6 +38,7 @@ class ScoutingProject < Sinatra::Base
       `umount /export`
 
       "OK"
+      erb :import
     else
       [401, "No USB Drive available: #{drive.inspect}"]
     end

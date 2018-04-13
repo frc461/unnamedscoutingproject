@@ -53,9 +53,8 @@ $(function() {
     $('.carousel').carousel('pause');
     $(document).on('keyup',
         Konami.code(function() {
-            alert('You have won, gg.');
             setTimeout(function(){
-                window.location = "/ynot";
+                submit();
             }, 250); 
         })
     );

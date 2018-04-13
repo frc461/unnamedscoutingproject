@@ -14,27 +14,45 @@
             />
   </head>
   <body>
+    <a href="/import" style="text-decoration: none;color: black">
     <div class="container">
+      <div class="row">
+        <div class="col">
+          <h4>Teams</h4>
+        </div>
+        <div class="col">
+          <h4>Auto Scale Average</h4>
+        </div>
+        <div class="col">
+          <h4>Auto Scale Total</h4>
+        </div>
+        <div class="col">
+          <h4>Tele Scale Average</h4>
+        </div>
+        <div class="col">
+          <h4>Tele Scale Total</h4>
+        </div>
+        </div>
       <% @teams.each do |team, matches| %>
         <div class="row">
-          <h4>Teams</h4>
           <div class="col">
             <%= team %>
           </div>
-          <h4>Match Number</h4>
-          <div class="col">
-            <%= matches.map{|m| (m['#matchNumber'] || 0).to_i }.reduce{|x, r| x + r} / matches.count %>
-          </div>
-          <h4>Auto Scale</h4>
           <div class="col">
             <%= matches.map{|m| (m['auto-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} / matches.count %>
           </div>
-          <h4>Tele Scale</h4>
+          <div class="col">
+            <%= matches.map{|m| (m['auto-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} %>
+          </div>
           <div class="col">
             <%= matches.map{|m| (m['tele-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} / matches.count %>
+          </div>
+          <div class="col">
+            <%= matches.map{|m| (m['tele-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} %>
           </div>
         </div>
       <% end %>
     </div>
+    </a>
   </body>
 </html>
