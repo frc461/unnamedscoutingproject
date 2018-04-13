@@ -16,6 +16,12 @@ class ScoutingProject < Sinatra::Base
   end
   get '/trend' do
     @matches = JSON.parse(File.read('./stuff.json'))
+    @teams = {}
+    @matches.each do |match|
+      @teams[match['team']] ||= []
+      @teams[match['team']] << match
+    end
+
     erb :trending
   end
   get '/trend.json' do

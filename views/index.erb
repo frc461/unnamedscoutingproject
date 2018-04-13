@@ -133,25 +133,26 @@ function submit() {
                 payload[el.data('datapoint')] = el.html();
             }
         });
-
-        //if(set.filter('[data-climb]').length > 0) {
-        //  payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? '1' : '-';
-        //}
-        // if(set.filter('[data-startleft]').length > 0 || set.filter('[data-startmiddle]').length > 0 || set.filter('[data-startright]').length > 0) {
-        //  payload['startPos'] = set.filter('[data-startleft]').hasClass('btn-success') ? 'L' : (set.filter('[data-startright]').hasClass('btn-success') ? 'R' : 'M');
-        // }
         if(set.filter('[data-cross]').length > 0) {
             payload['auto-cross'] = set.filter('[data-cross]').hasClass('btn-success') ? '1' : '-';
         }
-        if(set.filter('[data-climb]').length > 0) {
-            payload['vault'] = set.filter('[data-vault]').attr('checked') ? 'Y' : 'n';
-            payload['switch'] = set.filter('[data-switch]').attr('checked') ? 'Y' : 'n'; 
-            payload['scale'] = set.filter('[data-scale]').attr('checked') ? 'Y' : 'n';
-            payload['oppenent switch'] = set.filter('[data-oswitch]').attr('checked') ? 'Y' : 'n'; 
-            payload['defense'] = set.filter('data-def').attr('checked') ? 'Y' : 'n';
+        if(set.filter('[data-vault]').length > 0) {
+            payload['vault'] = set.filter('[data-vault]').hasClass('btn-success') ? 'Y' : 'n';
+        }
+        if(set.filter('[data-switch]').length > 0) {
+            payload['switch'] = set.filter('[data-switch]').hasClass('btn-success') ? 'Y' : 'n'; 
+        }
+        if(set.filter('[data-scale]').length > 0) {
+            payload['scale'] = set.filter('[data-scale]').hasClass('btn-success') ? 'Y' : 'n';
+        }
+        if(set.filter('[data-oswitch]').length > 0) {
+            payload['oppenent switch'] = set.filter('[data-oswitch]').hasClass('btn-success') ? 'Y' : 'n'; 
+        }
+        if(set.filter('[data-def]').length > 0) {
+            payload['defense'] = set.filter('[data-def]').hasClass('btn-success') ? 'Y' : 'n';
         }
         if(set.filter('[data-climb]').length > 0) {
-            payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? 'Climb' : (set.filter('[data-ramp]').hasClass('btn-success') ? 'Ramp' : ( set.filter('[data-rampbot]').hasClass('btn-success') ? 'Rampbot' : (set.filter('[data-climbramp]').hasClass('btn-success') ? 'both' : '-')));
+            payload['climb'] = set.filter('[data-climb]').hasClass('btn-success') ? 'Climb' : (set.filter('[data-ramp]').hasClass('btn-success') ? 'Ramp' : ( set.filter('[data-rampbot]').hasClass('btn-success') ? 'Rampbot' : (set.filter('[data-climbrampbot]').hasClass('btn-success') ? 'both' : '-')));
         }
         if(set.filter('[data-driver]').length > 0) {
           payload['driver-rating'] = set.filter('[data-driver]').hasClass('btn-success') ? ':)' : (set.filter('[data-driver1]').hasClass('btn-success') ? ':(' : 'No Ans');
@@ -219,6 +220,12 @@ function gqFunction() {
 function getn(e) {
     var teamid = $(e).data('teamid');
     tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].single');
+    tmpObj.removeClass('btn-success');
+    tmpObj.addClass('btn-light');
+}
+function getmnme(e) {
+    var teamid = $(e).data('teamid');
+    tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].role');
     tmpObj.removeClass('btn-success');
     tmpObj.addClass('btn-light');
 }
@@ -323,18 +330,21 @@ function upDateteamnum(e) {
                                             <%= partial :button, locals: {name: "Cross",teamid: "461"}%>
                                             <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "461"} %>
+                                            <%= partial :button3, locals: {label: "Foul", id: 'auto-foul',teamid: "461"}%>
                                         </div>
                                         <div class="col-sm-4"> 
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :button, locals: {name: "Cross",teamid: "462"}%>
                                             <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "462"} %>
+                                            <%= partial :button3, locals: {label: "Foul", id: 'auto-foul',teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4"> 
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :button, locals: {name: "Cross",teamid: "463"}%>
                                             <%= partial :counter, locals: {label: "Switch", id: 'auto-switch',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Scale", id: 'auto-scale',teamid: "463"} %>
+                                            <%= partial :button3, locals: {label: "Foul", id: 'auto-foul',teamid: "463"}%>
                                         </div>    
                                     </div>
                                 </div>
@@ -349,18 +359,21 @@ function upDateteamnum(e) {
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "461"} %>
                                             <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "461"}%>
+                                            <%= partial :button3, locals: {label: "Foul", id: 'tele-foul',teamid: "461"}%>
                                         </div> 
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "462"} %>
                                             <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "462"}%>
+                                            <%= partial :button3, locals: {label: "Foul", id: 'tele-foul',teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "463"} %>
                                             <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "463"}%>
+                                            <%= partial :button3, locals: {label: "Foul", id: 'tele-foul',teamid: "463"}%>
                                         </div>
                                     </div>
                                     <div class="row" style="background-color: #0e110f;color:white">
@@ -415,6 +428,9 @@ function upDateteamnum(e) {
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "461"}%></center>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                         <h6 style="text-align:center">Driver Rating</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
