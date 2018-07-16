@@ -12,51 +12,82 @@
             name='viewpoint'
             content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
             />
+    <style>
+.row {
+  background-color: #f8f8ff;
+}
+.row:nth-child(even) {
+  background-color: #eed;
+}
+    </style>
   </head>
   <body>
-    <a href="/import" style="text-decoration: none;color: black">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col">
-          <h4>Teams</h4>
-        </div>
-        <div class="col">
-          <h4>Auto Scale Average</h4>
-        </div>
-        <div class="col">
-          <h4>Auto Scale Total</h4>
-        </div>
-        <div class="col">
-          <h4>Tele Scale Average</h4>
-        </div>
-        <div class="col">
-          <h4>Tele Scale Total</h4>
-        </div>
-        </div>
-      <% @teams.each do |team, matches| %>
-        <div class="row">
-          <div class="col">
-            <%= team %>
+        <div class="col-9">
+          <div class="row">
+            <div class="col">
+              <h4>Teams</h4>
+            </div>
+            <div class="col">
+              <h4>Auto Scale Average</h4>
+            </div>
+            <div class="col">
+              <h4>Auto Switch Average</h4>
+            </div>
+            <div class="col">
+              <h4>Alliance Switch Average</h4>
+            </div>
+            <div class="col">
+              <h4>Tele Scale Average</h4>
+            </div>
+            <div class="col">
+              <h4>Opponent Switch Average</h4>
+            </div>
+            <div class="col">
+              <h4>Vault Cubes</h4>
+            </div>
+            <div class="col">
+              <h4>Climb</h4>
+            </div>
           </div>
-          <div class="col">
-            <%= matches.map{|m| (m['auto-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} / matches.count %>
-          </div>
-          <div class="col">
-            <%= matches.map{|m| (m['auto-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} %>
-          </div>
-          <div class="col">
-            <%= matches.map{|m| (m['tele-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} / matches.count %>
-          </div>
-          <div class="col">
-            <%= matches.map{|m| (m['tele-scale'] || 0).to_i }.reduce{|x, r| x.to_i + r.to_i} %>
+          <% @teams.sort.each do |team, matches| %>
+            <div class="row">
+              <div class="col">
+                <%= team %> <em>(<%= matches.length %>)</em>
+              </div>
+              <div class="col">
+                <%= (matches.map{|m| (m['auto-scale'] || 0).to_f }.reduce{|x, r| x.to_f + r.to_f} / matches.count).round(2) %>
+              </div>
+              <div class="col">
+                <%= (matches.map{|m| (m['auto-switch'] || 0).to_f }.reduce{|x, r| x.to_f + r.to_f} / matches.count).round(2) %>
+              </div>
+              <div class="col">
+                <%= (matches.map{|m| (m['tele-all-switch'] || 0).to_f }.reduce{|x, r| x.to_f + r.to_f} / matches.count).round(2) %>
+              </div>
+              <div class="col">
+                <%= (matches.map{|m| (m['tele-scale'] || 0).to_f }.reduce{|x, r| x.to_f + r.to_f} / matches.count).round(2) %>
+              </div>
+              <div class="col">
+                <%= (matches.map{|m| (m['tele-opp-switch'] || 0).to_f }.reduce{|x, r| x.to_f + r.to_f} / matches.count).round(2) %>
+              </div>
+              <div class="col">
+                <%= (matches.map{|m| (m['tele-cubes'] || 0).to_f }.reduce{|x, r| x.to_f + r.to_f} / matches.count).round(2) %>
+              </div>
+              <div class="col">
+                <%= matches.map{|m| ((m['climb'] || '').chars.first) }.reduce{|x, r| (x || '') + (r || '')}  %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <a href="/trend" class="btn btn-block btn-lg btn-primary">Reload</a>
           </div>
         </div>
-      <% end %>
+      </div>
       <script>
-if($('[tele-scale]').data() > 2) {
-}
       </script>
     </div>
-    </a>
   </body>
 </html>

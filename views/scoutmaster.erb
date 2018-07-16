@@ -169,7 +169,9 @@ function submit() {
         });
 
         payload['fail'] = set.filter('[data-fail]').hasClass('btn-danger') ? '1' : '-';
-        payload['comment'] = set.filter('textarea').val();
+        if(set.filter('[data-comment]').length > 0) {
+            payload['Scouting Comment'] = set.filter('[data-comment]').val();
+        }
 
         parts.push(JSON.stringify(payload));
     });
@@ -390,18 +392,24 @@ function updateTeamNums() {
                                 <div class="col-sm-6">
                                     <h4 data-teamid="461" style="margin-top:20px;width:100%;text-align:center">461</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "461"}%>
+                                    <input type="text" placeholder="Comments" data-teamid="461" data-comment style="margin: 10px;width: 95%;"></input>
                                     <h4 data-teamid="462" style="margin-top:20px;width:100%;text-align:center">462</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "462"}%>
+                                    <input type="text" placeholder="Comments" data-teamid="462" data-comment style="margin: 10px;width: 95%;"></input>
                                     <h4 data-teamid="463" style="margin-top:20px;width:100%;text-align:center">463</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "463"}%>
+                                    <input type="text" placeholder="Comments" data-teamid="463" data-comment style="margin: 10px;width: 95%;"></input>
                                 </div>
                                 <div class="col-sm-6">
                                     <h4 data-teamid="464" style="margin-top:20px;width:100%;text-align:center">464</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "464"}%>
+                                    <input type="text" placeholder="Comments" data-teamid="464" data-comment style="margin: 10px;width: 95%;"></input>
                                     <h4 data-teamid="465" style="margin-top:20px;width:100%;text-align:center">465</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "465"}%>
+                                    <input type="text" placeholder="Comments" data-teamid="465" data-comment style="margin: 10px;width: 95%;"></input>
                                     <h4 data-teamid="466" style="margin-top:20px;width:100%;text-align:center">466</h4>
                                     <%= partial :button1, locals: {name: "Fail", teamid: "466"}%>
+                                    <input type="text" placeholder="Comments" data-teamid="466" data-comment style="margin: 10px;width: 95%;"></input>
                                 </div>
                             </div>
                             <div class="row">

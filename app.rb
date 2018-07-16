@@ -15,11 +15,12 @@ class ScoutingProject < Sinatra::Base
     erb :home
   end
   get '/trend' do
-    @matches = JSON.parse(File.read('./stuff.json'))
+    #@matches = JSON.parse(File.read('./stuff.json'))
+    @matches = settings.mongo_db.find(team: {'$exists' => true}, match: {'$exists' => true}).map{|e| e}
     @teams = {}
     @matches.each do |match|
-      @teams[match['team']] ||= []
-      @teams[match['team']] << match
+      @teams[match['team'].to_i] ||= []
+      @teams[match['team'].to_i] << match
     end
 
     erb :trending

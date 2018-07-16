@@ -54,7 +54,7 @@ $(function() {
     $(document).on('keyup',
         Konami.code(function() {
             setTimeout(function(){
-                submit();
+                mit();
             }, 250); 
         })
     );
@@ -112,6 +112,7 @@ function submit() {
             if(e.html() == "+" || e.html() == "-") { return false; }
             if(e.hasClass('badge')) { return false; }
             if(e.hasClass('btn-info')) {return false;}
+            if(e.hasClass('nocount')) {return false;}
             return true;
         });
 
@@ -132,6 +133,9 @@ function submit() {
                 payload[el.data('datapoint')] = el.html();
             }
         });
+        if(set.filter('[data-comment]').length > 0) {
+            payload['Comment'] = set.filter('[data-comment]').val();
+        }
         if(set.filter('[data-cross]').length > 0) {
             payload['auto-cross'] = set.filter('[data-cross]').hasClass('btn-success') ? '1' : '-';
         }
@@ -165,7 +169,20 @@ function submit() {
         faye.publish('/submit', {color: color, teams: teamnos})
             location.reload();
     });
-
+}
+function mit() {
+  setInterval(function(){
+  setTimeout(function() {
+    $('body').css({'background-color': 'red'});
+  },1000);
+  setTimeout(function() {
+    $('body').css({'background-color': 'green'});
+  },2000);
+  setTimeout(function() {
+    $('body').css({'background-color': 'blue'});
+  },3000);
+  }, 1000);
+  //setTimeout(mit(), 4000 );
 }
 function qFunction() {
     console.log($(indicator));
@@ -222,11 +239,10 @@ function getn(e) {
     tmpObj.removeClass('btn-success');
     tmpObj.addClass('btn-light');
 }
-function getmnme(e) {
+function getmnmr(e) {
     var teamid = $(e).data('teamid');
-    tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].role');
+    tmpObj = $(e).parent().parent().find('button[data-teamid="' + teamid + '"].climb');
     tmpObj.removeClass('btn-success');
-    tmpObj.addClass('btn-light');
 }
 function getmnm(e) {
     var teamid = $(e).data('teamid');
@@ -357,21 +373,27 @@ function upDateteamnum(e) {
                                             <%= partial :name, locals: {name: "Name",teamid: "461"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "461"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "461"} %>
+                                            <br>
                                             <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "461"}%>
+                                            <br>
                                             <%= partial :button3, locals: {label: "Foul", id: 'tele-foul',teamid: "461"}%>
                                         </div> 
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "462"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "462"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "462"} %>
+                                            <br>
                                             <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "462"}%>
+                                            <br>
                                             <%= partial :button3, locals: {label: "Foul", id: 'tele-foul',teamid: "462"}%>
                                         </div>
                                         <div class="col-sm-4">
                                             <%= partial :name, locals: {name: "Name",teamid: "463"}%>
                                             <%= partial :counter, locals: {label: "Defensive", id: 'tele-all-switch',teamid: "463"} %>
                                             <%= partial :counter, locals: {label: "Vault", id: 'tele-cubes',teamid: "463"} %>
+                                            <br>
                                             <%= partial :check, locals: {value1: "Vault", value2: "Switch", value3: "Scale", value4: "Opp. Switch", value5: "Defense",teamid: "463"}%>
+                                            <br>
                                             <%= partial :button3, locals: {label: "Foul", id: 'tele-foul',teamid: "463"}%>
                                         </div>
                                     </div>
@@ -427,6 +449,9 @@ function upDateteamnum(e) {
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "461"}%></center>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                          <input type="text" placeholder="Comments" data-teamid="461" data-comment style="margin: 10px;width: 95%;"></input>
+                                        </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "462"}%>
@@ -439,6 +464,9 @@ function upDateteamnum(e) {
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "462"}%></center>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                          <input type="text" placeholder="Comments" data-teamid="462" data-comment style="margin: 10px;width: 95%;"></input>
+                                        </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <%= partial :name, locals: {name: "Name",teamid: "463"}%>
@@ -450,6 +478,9 @@ function upDateteamnum(e) {
                                             <div class="col-sm-6">
                                                 <center><%= partial :rating1, locals: {name: ":(",teamid: "463"}%></center>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                          <input type="text" placeholder="Comments" data-teamid="463" data-comment style="margin: 10px;width: 95%;"></input>
                                         </div>
                                     </div>
                                 </div>
